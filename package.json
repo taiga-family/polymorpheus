@@ -18,31 +18,38 @@
     ],
     "homepage": "https://github.com/taiga-family/ng-polymorpheus#README",
     "bugs": "https://github.com/taiga-family/ng-polymorpheus/issues",
-    "repository": "https://github.com/taiga-family/ng-polymorpheus",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/taiga-family/ng-polymorpheus"
+    },
     "license": "Apache-2.0",
     "author": {
         "name": "Alex Inkin",
         "email": "alexander@inkin.ru"
     },
     "contributors": [
-        "Roman Sedov <79601794011@ya.ru> (http://marsibarsi.me/)"
+        {
+            "name": "Roman Sedov",
+            "email": "79601794011@ya.ru",
+            "url": "http://marsibarsi.me/"
+        }
     ],
     "workspaces": [
         "projects/*"
     ],
     "scripts": {
-        "prepare": "husky",
-        "start": "nx serve demo",
-        "dev:ssr": "nx run demo:serve-ssr",
-        "build:ssr": "nx build --prod && nx run demo:server:production",
-        "prerender": "nx run demo:prerender",
         "build": "nx build demo",
-        "stylelint": "stylelint '**/*.{less,css}'",
-        "prettier": "prettier !package-lock.json !CHANGELOG.md .  --ignore-path .gitignore",
-        "test": "nx test ng-polymorpheus",
+        "build:ssr": "nx build --prod && nx run demo:server:production",
+        "dev:ssr": "nx run demo:serve-ssr",
         "lint": "eslint .",
-        "typecheck": "tsc --noEmit --skipLibCheck",
-        "release": "npx syncer && npx nx publish ng-polymorpheus"
+        "prepare": "husky",
+        "prerender": "nx run demo:prerender",
+        "prettier": "prettier !package-lock.json !CHANGELOG.md .  --ignore-path .gitignore",
+        "release": "npx syncer && npx nx publish ng-polymorpheus",
+        "start": "nx serve demo",
+        "stylelint": "stylelint '**/*.{less,css}'",
+        "test": "nx test ng-polymorpheus",
+        "typecheck": "tsc --noEmit --skipLibCheck"
     },
     "commitlint": {
         "extends": [
@@ -65,15 +72,6 @@
         "extends @taiga-ui/browserslist-config"
     ],
     "prettier": "@taiga-ui/prettier-config",
-    "eslintConfig": {
-        "extends": [
-            "plugin:@taiga-ui/experience/all"
-        ],
-        "rules": {
-            "@angular-eslint/no-conflicting-lifecycle": "off"
-        },
-        "root": true
-    },
     "stylelint": {
         "extends": [
             "@taiga-ui/stylelint-config"
@@ -104,27 +102,15 @@
         "@nx/workspace": "21.6.10",
         "@schematics/angular": "19.2.19",
         "@swc/helpers": "0.5.17",
-        "@taiga-ui/auto-changelog-config": "0.331.0",
-        "@taiga-ui/browserslist-config": "0.331.0",
-        "@taiga-ui/commitlint-config": "0.331.0",
+        "@taiga-ui/configs": "0.373.0",
         "@taiga-ui/dompurify": "4.1.11",
-        "@taiga-ui/eslint-plugin-experience": "0.249.0",
-        "@taiga-ui/jest-config": "0.331.0",
-        "@taiga-ui/prettier-config": "0.331.0",
-        "@taiga-ui/release-it-config": "0.331.0",
-        "@taiga-ui/stylelint-config": "0.331.0",
-        "@taiga-ui/syncer": "0.331.0",
-        "@taiga-ui/tsconfig": "0.331.0",
+        "@taiga-ui/syncer": "0.373.0",
         "@types/estree": "1.0.8",
         "@types/express": "5.0.6",
-        "@types/jest": "29.5.14",
         "@types/node": "24.10.4",
         "express": "4.22.1",
         "highlight.js": "11.11.1",
         "husky": "9.1.7",
-        "jest": "29.7.0",
-        "jest-environment-jsdom": "29.7.0",
-        "jest-preset-angular": "14.6.2",
         "less": "4.5.1",
         "lint-staged": "15.5.2",
         "ng-packagr": "19.2.2",
@@ -144,7 +130,6 @@
         "matchPackageNames": [
             "@taiga-ui/polymorpheus",
             "ng-polymorpheus"
-        ],
-        "ignorePackageNames": []
+        ]
     }
 }

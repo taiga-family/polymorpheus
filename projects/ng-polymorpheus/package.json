@@ -18,7 +18,10 @@
     ],
     "homepage": "https://github.com/taiga-family/ng-polymorpheus#README",
     "bugs": "https://github.com/taiga-family/ng-polymorpheus/issues",
-    "repository": "https://github.com/taiga-family/ng-polymorpheus",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/taiga-family/ng-polymorpheus"
+    },
     "license": "Apache-2.0",
     "peerDependencies": {
         "@angular/core": ">=19.0.0",

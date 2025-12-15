@@ -12,7 +12,7 @@ import {TabsComponent} from '../tabs/tabs.component';
     selector: 'app-input-demo',
     imports: [HighlightModule, InputComponent, TabsComponent],
     templateUrl: './input-demo.template.html',
-    styleUrls: ['./input-demo.style.less'],
+    styleUrl: './input-demo.style.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputDemoComponent extends AbstractDemo {

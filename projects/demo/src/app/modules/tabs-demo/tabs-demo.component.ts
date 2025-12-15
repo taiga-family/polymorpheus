@@ -1,11 +1,10 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import type {PolymorpheusContent} from '@taiga-ui/polymorpheus';
-import {PolymorpheusComponent} from '@taiga-ui/polymorpheus';
+import {PolymorpheusComponent, type PolymorpheusContent} from '@taiga-ui/polymorpheus';
 import {HighlightModule} from 'ngx-highlightjs';
 
 import {AbstractDemo} from '../abstract-demo';
 import {avatar, gear} from '../constants';
-import type {CustomTab} from '../interfaces';
+import {type CustomTab} from '../interfaces';
 import {TabComponent} from '../tab/tab.component';
 import * as typescript from '../tab/tab.component.ts?raw';
 import * as css from '../tab/tab.style.less?raw';
@@ -19,7 +18,7 @@ import * as HTML from '../tabs/tabs.template.html?raw';
     selector: 'app-tabs-demo',
     imports: [HighlightModule, TabsComponent],
     templateUrl: './tabs-demo.template.html',
-    styleUrls: ['./tabs-demo.style.less'],
+    styleUrl: './tabs-demo.style.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsDemoComponent extends AbstractDemo {

@@ -12,7 +12,7 @@ import {TabsComponent} from '../tabs/tabs.component';
     selector: 'app-menu-demo',
     imports: [HighlightModule, MenuComponent, TabsComponent],
     templateUrl: './menu-demo.template.html',
-    styleUrls: ['./menu-demo.style.less'],
+    styleUrl: './menu-demo.style.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuDemoComponent extends AbstractDemo {

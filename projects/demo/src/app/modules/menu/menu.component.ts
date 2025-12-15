@@ -1,14 +1,13 @@
 import {ChangeDetectionStrategy, Component, input, output, signal} from '@angular/core';
-import type {PolymorpheusContent} from '@taiga-ui/polymorpheus';
-import {PolymorpheusOutlet} from '@taiga-ui/polymorpheus';
+import {type PolymorpheusContent, PolymorpheusOutlet} from '@taiga-ui/polymorpheus';
 
-import type {ContextWithActive} from '../interfaces';
+import {type ContextWithActive} from '../interfaces';
 
 @Component({
     selector: 'app-menu',
     imports: [PolymorpheusOutlet],
     templateUrl: './menu.template.html',
-    styleUrls: ['./menu.style.less'],
+    styleUrl: './menu.style.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
         '(mouseleave)': 'activeItem.set(null)',

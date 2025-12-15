@@ -8,9 +8,7 @@ describe('PolymorpheusTemplate', () => {
         standalone: true,
         imports: [PolymorpheusOutlet, PolymorpheusTemplate],
         template: `
-            <ng-container
-                *polymorpheusOutlet="polymorpheus; context: context"
-            ></ng-container>
+            <ng-container *polymorpheusOutlet="polymorpheus; context: context" />
             <ng-template
                 #polymorpheus="polymorpheus"
                 let-value

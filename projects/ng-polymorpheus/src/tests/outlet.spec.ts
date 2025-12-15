@@ -1,12 +1,16 @@
-import type {TemplateRef} from '@angular/core';
-import {ChangeDetectionStrategy, Component, ElementRef, ViewChild} from '@angular/core';
-import type {ComponentFixture} from '@angular/core/testing';
-import {TestBed} from '@angular/core/testing';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    type TemplateRef,
+    viewChild,
+} from '@angular/core';
+import {type ComponentFixture, TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it, jest} from '@jest/globals';
-import type {PolymorpheusContent} from '@taiga-ui/polymorpheus';
 import {
     injectContext,
     PolymorpheusComponent,
+    type PolymorpheusContent,
     PolymorpheusOutlet,
     PolymorpheusTemplate,
 } from '@taiga-ui/polymorpheus';
@@ -38,12 +42,14 @@ describe('PolymorpheusOutlet', () => {
                     </ng-container>
                 </div>
             }
+
             <ng-template
                 #plain
                 let-value
             >
                 <strong>{{ value }}</strong>
             </ng-template>
+
             <ng-template
                 #polymorpheus="polymorpheus"
                 let-value
@@ -56,19 +62,20 @@ describe('PolymorpheusOutlet', () => {
         changeDetection: ChangeDetectionStrategy.Default,
     })
     class TestComponent {
-        @ViewChild('element', {read: ElementRef})
-        public element!: ElementRef<HTMLElement>;
+        public readonly element = viewChild.required('element', {
+            read: ElementRef<HTMLElement>,
+        });
 
-        @ViewChild('plain')
-        public template!: TemplateRef<Record<never, never>>;
+        public readonly template =
+            viewChild.required<TemplateRef<Record<never, never>>>('plain');
 
-        @ViewChild('polymorpheus')
-        public polymorpheus!: PolymorpheusTemplate<Record<never, never>>;
+        public readonly polymorpheus =
+            viewChild.required<PolymorpheusTemplate<Record<never, never>>>(
+                'polymorpheus',
+            );
 
         public polymorphic = false;
-
         public content: PolymorpheusContent = '';
-
         public context: any = undefined;
 
         public isNumber(primitive: number | string): boolean {
@@ -159,9 +166,7 @@ describe('PolymorpheusOutlet', () => {
 
     describe('Handler', () => {
         beforeEach(() => {
-            testComponent.context = {
-                $implicit: 'string',
-            };
+            testComponent.context = {$implicit: 'string'};
             testComponent.content = ({$implicit}) => $implicit;
             fixture.detectChanges();
         });
@@ -171,9 +176,7 @@ describe('PolymorpheusOutlet', () => {
         });
 
         it('works with numbers', () => {
-            testComponent.context = {
-                $implicit: 237,
-            };
+            testComponent.context = {$implicit: 237};
             fixture.detectChanges();
 
             expect(text()).toBe('237');
@@ -204,9 +207,7 @@ describe('PolymorpheusOutlet', () => {
 
         describe('Handler', () => {
             beforeEach(() => {
-                testComponent.context = {
-                    $implicit: 'string',
-                };
+                testComponent.context = {$implicit: 'string'};
                 testComponent.content = ({$implicit}) => $implicit;
                 fixture.detectChanges();
             });
@@ -216,9 +217,7 @@ describe('PolymorpheusOutlet', () => {
             });
 
             it('works with numbers', () => {
-                testComponent.context = {
-                    $implicit: 237,
-                };
+                testComponent.context = {$implicit: 237};
                 fixture.detectChanges();
 
                 expect(text()).toBe('Number: 237');
@@ -227,10 +226,8 @@ describe('PolymorpheusOutlet', () => {
     });
 
     it('templateRef', () => {
-        testComponent.context = {
-            $implicit: 'string',
-        };
-        testComponent.content = testComponent.template;
+        testComponent.context = {$implicit: 'string'};
+        testComponent.content = testComponent.template();
         fixture.detectChanges();
 
         expect(html()).toContain('<strong>string</strong>');
@@ -238,10 +235,8 @@ describe('PolymorpheusOutlet', () => {
 
     describe('PolymorpheusTemplate', () => {
         beforeEach(() => {
-            testComponent.context = {
-                $implicit: 'string',
-            };
-            testComponent.content = testComponent.polymorpheus;
+            testComponent.context = {$implicit: 'string'};
+            testComponent.content = testComponent.polymorpheus()!;
         });
 
         it('works', () => {
@@ -251,7 +246,8 @@ describe('PolymorpheusOutlet', () => {
         });
 
         it('triggers change detection', () => {
-            const changeDetectionSpy = jest.spyOn(testComponent.polymorpheus, 'check');
+            const polymorpheus = testComponent.polymorpheus();
+            const changeDetectionSpy = jest.spyOn(polymorpheus, 'check');
 
             fixture.detectChanges();
 

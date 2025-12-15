@@ -241,4 +241,4 @@ All notable changes to this project will be documented in this file. See
 - **outlet**: simplify template
   [(6a4c6ad)](https://github.com/taiga-family/ng-polymorpheus/commit/6a4c6ad65c254970fdaa6d35fad41956042f7163)
 
-### [1.0.0]() (2019-09-26)
+### [1.0.0](https://github.com/taiga-family/polymorpheus/releases/tag/v1.0.0) (2019-09-26)
