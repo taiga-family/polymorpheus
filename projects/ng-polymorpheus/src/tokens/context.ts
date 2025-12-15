@@ -1,5 +1,5 @@
 /// <reference types="@taiga-ui/tsconfig/ng-dev-mode" />
-import type {InjectOptions} from '@angular/core';
+import type {InjectOptions, Provider} from '@angular/core';
 import {inject, InjectionToken} from '@angular/core';
 
 /**
@@ -9,6 +9,13 @@ import {inject, InjectionToken} from '@angular/core';
 export const POLYMORPHEUS_CONTEXT = new InjectionToken<Record<any, any>>(
     ngDevMode ? 'POLYMORPHEUS_CONTEXT' : '',
 );
+
+export function provideContext<T = Record<any, any>>(useValue: T): Provider {
+    return {
+        provide: POLYMORPHEUS_CONTEXT,
+        useValue,
+    };
+}
 
 export function injectContext<T>(options?: InjectOptions & {optional?: false}): T;
 export function injectContext<T>(options?: InjectOptions & {optional: true}): T | null;

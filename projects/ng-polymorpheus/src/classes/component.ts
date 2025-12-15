@@ -1,7 +1,7 @@
 import type {Type} from '@angular/core';
 import {Injector} from '@angular/core';
 
-import {POLYMORPHEUS_CONTEXT} from '../tokens/context';
+import {provideContext} from '../tokens/context';
 
 /**
  * Wrapper class for a component that will be used as content for {@link PolymorpheusOutlet}
@@ -18,7 +18,7 @@ export class PolymorpheusComponent<T> {
     public createInjector<C>(injector: Injector, useValue?: C): Injector {
         return Injector.create({
             parent: this.i || injector,
-            providers: useValue ? [{provide: POLYMORPHEUS_CONTEXT, useValue}] : [],
+            providers: useValue ? [provideContext(useValue)] : [],
         });
     }
 }
