@@ -13,7 +13,7 @@ interface StarWarsChar {
     selector: 'app-star-wars',
     imports: [ComboBoxComponent],
     templateUrl: './star-wars.template.html',
-    styleUrls: ['./star-wars.style.less'],
+    styleUrl: './star-wars.style.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StarWarsComponent {

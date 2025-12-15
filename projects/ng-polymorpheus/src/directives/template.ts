@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/prefer-inject */
 import {ChangeDetectorRef, Directive, inject, TemplateRef} from '@angular/core';
 
 /**

@@ -1,4 +1,4 @@
-/* eslint-disable sonarjs/no-primitive-wrappers,no-new-wrappers,unicorn/new-for-builtins */
+/* eslint-disable unicorn/new-for-builtins */
 import {describe, expect, it} from '@jest/globals';
 
 import {isPrimitive} from '../utils/is-primitive';
@@ -8,7 +8,7 @@ describe('isPrimitive', () => {
         expect(isPrimitive(undefined)).toBe(true);
         expect(isPrimitive(null)).toBe(true);
         expect(isPrimitive(12)).toBe(true);
-        expect(isPrimitive(Number(12))).toBe(true);
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion
         expect(isPrimitive(Number(12))).toBe(true);
         expect(isPrimitive('Hello world')).toBe(true);
         expect(isPrimitive(true)).toBe(true);

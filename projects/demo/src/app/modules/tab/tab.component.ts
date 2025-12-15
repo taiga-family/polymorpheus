@@ -1,13 +1,13 @@
 import {ChangeDetectionStrategy, Component, computed, input} from '@angular/core';
 import {PolymorpheusOutlet, PolymorpheusTemplate} from '@taiga-ui/polymorpheus';
 
-import type {CustomTab} from '../interfaces';
+import {type CustomTab} from '../interfaces';
 
 @Component({
     selector: 'app-tab',
     imports: [PolymorpheusOutlet],
     templateUrl: './tab.template.html',
-    styleUrls: ['./tab.style.less'],
+    styleUrl: './tab.style.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabComponent {

@@ -1,18 +1,22 @@
-import type {ComponentRef, DoCheck, OnChanges, SimpleChanges} from '@angular/core';
+/* eslint-disable @angular-eslint/no-conflicting-lifecycle */
 import {
     ChangeDetectorRef,
+    type ComponentRef,
     Directive,
+    type DoCheck,
     inject,
     INJECTOR,
+    type OnChanges,
     reflectComponentType,
+    type SimpleChanges,
     TemplateRef,
     ViewContainerRef,
 } from '@angular/core';
 
 import {PolymorpheusComponent} from '../classes/component';
 import {PolymorpheusContext} from '../classes/context';
-import type {PolymorpheusContent} from '../types/content';
-import type {PolymorpheusPrimitive} from '../types/primitive';
+import {type PolymorpheusContent} from '../types/content';
+import {type PolymorpheusPrimitive} from '../types/primitive';
 import {isPrimitive} from '../utils/is-primitive';
 import {PolymorpheusTemplate} from './template';
 

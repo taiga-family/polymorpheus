@@ -6,17 +6,17 @@ import {
     model,
     signal,
 } from '@angular/core';
-import type {PolymorpheusContent} from '@taiga-ui/polymorpheus';
+import {type PolymorpheusContent} from '@taiga-ui/polymorpheus';
 
 import {InputComponent} from '../input/input.component';
-import type {ContextWithActive} from '../interfaces';
+import {type ContextWithActive} from '../interfaces';
 import {MenuComponent} from '../menu/menu.component';
 
 @Component({
     selector: 'app-combo-box',
     imports: [InputComponent, MenuComponent],
     templateUrl: './combo-box.template.html',
-    styleUrls: ['./combo-box.style.less'],
+    styleUrl: './combo-box.style.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComboBoxComponent<T> {

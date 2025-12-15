@@ -1,5 +1,4 @@
-import type {Type} from '@angular/core';
-import {Injector} from '@angular/core';
+import {Injector, type Type} from '@angular/core';
 
 import {provideContext} from '../tokens/context';
 

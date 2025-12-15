@@ -4,6 +4,6 @@
         "rootDir": ".",
         "baseUrl": "."
     },
-    "include": ["projects", "scripts", "setup-jest.ts", "jest.config.ts"],
+    "include": ["projects", "scripts", "setup-jest.ts", "jest.config.ts", "eslint.config.ts"],
     "exclude": ["**/node_modules", "**/.*/", "*.js"]
 }

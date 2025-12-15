@@ -1,6 +1,5 @@
 /// <reference types="@taiga-ui/tsconfig/ng-dev-mode" />
-import type {InjectOptions, Provider} from '@angular/core';
-import {inject, InjectionToken} from '@angular/core';
+import {inject, InjectionToken, type InjectOptions, type Provider} from '@angular/core';
 
 /**
  * Use this token to access context within your components when

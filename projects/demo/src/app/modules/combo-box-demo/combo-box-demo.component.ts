@@ -12,7 +12,7 @@ import {TabsComponent} from '../tabs/tabs.component';
     selector: 'app-combo-box-demo',
     imports: [ComboBoxComponent, HighlightModule, TabsComponent],
     templateUrl: './combo-box-demo.template.html',
-    styleUrls: ['./combo-box-demo.style.less'],
+    styleUrl: './combo-box-demo.style.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComboBoxDemoComponent extends AbstractDemo {

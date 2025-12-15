@@ -1,5 +1,5 @@
 import TerserPlugin from 'terser-webpack-plugin';
-import type {Configuration, RuleSetRule} from 'webpack';
+import {type Configuration, type RuleSetRule} from 'webpack';
 import {merge} from 'webpack-merge';
 
 const CI_MODE = process.env['TUI_CI'] === 'true';
@@ -105,10 +105,8 @@ export default (ngConfigs: Configuration): Configuration => {
         (rule) => {
             if (
                 typeof rule === 'object' &&
-                !!rule &&
                 DO_NOT_MUTATE_RAW_FILE_CONTENTS.some(
-                    (pattern) =>
-                        rule?.test instanceof RegExp && rule?.test?.test(pattern),
+                    (pattern) => rule.test instanceof RegExp && rule.test.test(pattern),
                 )
             ) {
                 return {...rule, resourceQuery: {not: [RAW_TS_QUERY]}};
