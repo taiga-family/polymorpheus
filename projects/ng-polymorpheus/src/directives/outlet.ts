@@ -101,8 +101,12 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
 
     private process(content: PolymorpheusComponent<unknown>, proxy?: C): void {
         const injector = content.createInjector(this.i, proxy);
+        const environmentInjector = content.getEnvironmentInjector(injector);
 
-        this.c = this.vcr.createComponent(content.component, {injector});
+        this.c = this.vcr.createComponent(content.component, {
+            injector,
+            environmentInjector: environmentInjector ?? undefined,
+        });
     }
 
     private update(): void {

@@ -1,9 +1,15 @@
 import {
     ChangeDetectionStrategy,
     Component,
+    createEnvironmentInjector,
     ElementRef,
+    EnvironmentInjector,
+    inject,
+    Injectable,
+    type OnDestroy,
     type TemplateRef,
     viewChild,
+    ViewContainerRef,
 } from '@angular/core';
 import {type ComponentFixture, TestBed} from '@angular/core/testing';
 import {beforeEach, describe, expect, it, jest} from '@jest/globals';
@@ -137,15 +143,17 @@ describe('PolymorpheusOutlet', () => {
     });
 
     it('static type check exists', () => {
-        // @ts-ignore
-        expect(PolymorpheusTemplate.ngTemplateContextGuard({polymorpheus: {}})).toBe(
-            true,
-        );
+        const dir = {polymorpheus: {}} as unknown as PolymorpheusTemplate<unknown>;
+        const result = PolymorpheusTemplate.ngTemplateContextGuard(dir, {});
+
+        expect(result).toBe(true);
     });
 
     it('directive static type check exists', () => {
-        // @ts-ignore
-        expect(PolymorpheusOutlet.ngTemplateContextGuard({polymorpheus: {}})).toBe(true);
+        const dir = {polymorpheus: {}} as unknown as PolymorpheusOutlet<unknown>;
+        const result = PolymorpheusOutlet.ngTemplateContextGuard(dir, {});
+
+        expect(result).toBe(true);
     });
 
     describe('Primitive', () => {
@@ -290,6 +298,87 @@ describe('PolymorpheusOutlet', () => {
             fixture.detectChanges();
 
             expect(text()).toBe('Component: Hello World');
+        });
+    });
+
+    describe('EnvironmentInjector', () => {
+        @Injectable()
+        class EnvironmentService {
+            public readonly value = 'from environment injector';
+        }
+
+        @Component({
+            template: '{{ service.value }}',
+            changeDetection: ChangeDetectionStrategy.OnPush,
+        })
+        class EnvironmentContent {
+            public readonly service = inject(EnvironmentService);
+        }
+
+        @Component({
+            imports: [PolymorpheusOutlet],
+            template: `
+                <ng-container *polymorpheusOutlet="content" />
+            `,
+            changeDetection: ChangeDetectionStrategy.OnPush,
+        })
+        class HostComponent implements OnDestroy {
+            private readonly parentEnvironment = inject(EnvironmentInjector);
+
+            public readonly outlet =
+                viewChild.required<PolymorpheusOutlet<EnvironmentContent>>(
+                    PolymorpheusOutlet,
+                );
+
+            public readonly vcr = viewChild.required(PolymorpheusOutlet, {
+                read: ViewContainerRef,
+            });
+
+            public readonly environment = createEnvironmentInjector(
+                [EnvironmentService],
+                this.parentEnvironment,
+            );
+
+            public readonly content = new PolymorpheusComponent(
+                EnvironmentContent,
+                this.environment,
+            );
+
+            public ngOnDestroy(): void {
+                this.environment.destroy();
+            }
+        }
+
+        it('creates component using providers from environment injector', () => {
+            const fixture = TestBed.createComponent(HostComponent);
+            const viewContainerRef = fixture.componentInstance.vcr;
+            const outlet = fixture.componentInstance.outlet;
+
+            expect(viewContainerRef).toBeDefined();
+            expect(outlet).toBeDefined();
+
+            const createComponentSpy = jest.spyOn(
+                // @ts-ignore
+                outlet().vcr,
+                'createComponent',
+            );
+
+            fixture.detectChanges();
+
+            expect(createComponentSpy).toHaveBeenCalled();
+
+            const [, options] = createComponentSpy.mock.calls[0] ?? [];
+            const environmentInjector = (
+                options as {environmentInjector?: EnvironmentInjector} | null
+            )?.environmentInjector;
+
+            expect(fixture.nativeElement.textContent.trim()).toBe(
+                'from environment injector',
+            );
+
+            expect(environmentInjector).toBe(fixture.componentInstance.environment);
+
+            createComponentSpy.mockRestore();
         });
     });
 

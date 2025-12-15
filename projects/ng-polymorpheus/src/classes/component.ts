@@ -1,4 +1,4 @@
-import {Injector, type Type} from '@angular/core';
+import {EnvironmentInjector, Injector, type Type} from '@angular/core';
 
 import {provideContext} from '../tokens/context';
 
@@ -9,6 +9,9 @@ import {provideContext} from '../tokens/context';
  * @param injector — optional {@link Injector} for lazy loaded module case
  */
 export class PolymorpheusComponent<T> {
+    private readonly environmentInjector =
+        this.i instanceof EnvironmentInjector ? this.i : null;
+
     constructor(
         public readonly component: Type<T>,
         private readonly i?: Injector,
@@ -19,5 +22,9 @@ export class PolymorpheusComponent<T> {
             parent: this.i || injector,
             providers: useValue ? [provideContext(useValue)] : [],
         });
+    }
+
+    public getEnvironmentInjector(injector: Injector): EnvironmentInjector | null {
+        return this.environmentInjector ?? injector.get(EnvironmentInjector, null);
     }
 }
