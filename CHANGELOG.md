@@ -1,3 +1,17 @@
+## [5.0.0](https://github.com/taiga-family/polymorpheus/compare/v4.9.0...v5.0.0) (2025-12-16)
+
+### 🚀 Features
+
+- add `provideContext` (#1003)
+  [(071b823)](https://github.com/taiga-family/polymorpheus/commit/071b8233ec594bfd2ecd567d0aa76ee7b5367180)
+- **outlet**: allow using inputs in dynamic components (#996)
+  [(e7331c7)](https://github.com/taiga-family/polymorpheus/commit/e7331c71f24bd2e92d29070a47cec8e6ec9d62f7)
+
+### 🐞 Bug Fixes
+
+- **component**: fix `createInjector` without context (#1002)
+  [(3772f03)](https://github.com/taiga-family/polymorpheus/commit/3772f031077fea9240809ea830c0c7329e77e341)
+
 ### [4.9.0](https://github.com/taiga-family/ng-polymorpheus/compare/v4.8.0...v4.9.0) (2025-03-16)
 
 ### 🐞 Bug Fixes

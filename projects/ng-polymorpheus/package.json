@@ -1,6 +1,6 @@
 {
     "name": "@taiga-ui/polymorpheus",
-    "version": "4.9.0",
+    "version": "5.0.0",
     "description": "This is a tiny library for customizing components appearance",
     "keywords": [
         "angular",
