@@ -257,9 +257,7 @@ describe('PolymorpheusOutlet', () => {
 
     describe('PolymorpheusComponent', () => {
         it('creates component', () => {
-            testComponent.context = {
-                $implicit: 'string',
-            };
+            testComponent.context = {$implicit: 'string'};
             testComponent.content = new PolymorpheusComponent(ComponentContent);
             fixture.detectChanges();
 
@@ -267,17 +265,13 @@ describe('PolymorpheusOutlet', () => {
         });
 
         it('does not recreate component if context changes to the same shape', () => {
-            testComponent.context = {
-                $implicit: 'string',
-            };
+            testComponent.context = {$implicit: 'string'};
             testComponent.content = new PolymorpheusComponent(ComponentContent);
             fixture.detectChanges();
 
             const counter = COUNTER;
 
-            testComponent.context = {
-                $implicit: 'number',
-            };
+            testComponent.context = {$implicit: 'number'};
             fixture.detectChanges();
 
             expect(text()).toBe('Component: number');

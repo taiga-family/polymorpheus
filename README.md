@@ -73,7 +73,7 @@ export class MyComponent {
 
 ### Adding type to template context
 
-You can use `polymorpehus` directive to add type to template context:
+You can use `polymorpheus` directive to add type to template context:
 
 ```typescript
 readonly context!: { $implicit: number };

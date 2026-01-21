@@ -4,8 +4,6 @@ export default [
     ...taiga.configs.recommended,
     {
         files: ['**/*.md'],
-        rules: {
-            'markdown/heading-increment': 'off',
-        },
+        rules: {'markdown/heading-increment': 'off'},
     },
 ];

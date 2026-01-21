@@ -9,9 +9,7 @@ import {type ContextWithActive} from '../interfaces';
     templateUrl: './menu.template.html',
     styleUrl: './menu.style.less',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    host: {
-        '(mouseleave)': 'activeItem.set(null)',
-    },
+    host: {'(mouseleave)': 'activeItem.set(null)'},
 })
 export class MenuComponent<T> {
     protected readonly activeItem = signal<T | null>(null);
