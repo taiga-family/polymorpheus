@@ -38,20 +38,20 @@
         "projects/*"
     ],
     "scripts": {
-    "build": "nx build demo",
-    "build:ssr": "nx build --prod && nx run demo:server:production",
-    "cspell": "cspell --relative --no-progress --dot --gitignore .",
-    "dev:ssr": "nx run demo:serve-ssr",
-    "lint": "eslint .",
-    "prepare": "husky",
-    "prerender": "nx run demo:prerender",
-    "prettier": "prettier !package-lock.json !CHANGELOG.md .  --ignore-path .gitignore",
-    "release": "npx syncer && npx nx publish ng-polymorpheus",
-    "start": "nx serve demo",
-    "stylelint": "stylelint '**/*.{less,css}'",
-    "test": "nx test ng-polymorpheus",
-    "typecheck": "tsc --noEmit --skipLibCheck"
-  },
+        "build": "nx build demo",
+        "build:ssr": "nx build --prod && nx run demo:server:production",
+        "cspell": "cspell --relative --no-progress --dot --gitignore .",
+        "dev:ssr": "nx run demo:serve-ssr",
+        "lint": "eslint .",
+        "prepare": "husky",
+        "prerender": "nx run demo:prerender",
+        "prettier": "prettier !package-lock.json !CHANGELOG.md .  --ignore-path .gitignore",
+        "release": "npx syncer && npx nx publish ng-polymorpheus",
+        "start": "nx serve demo",
+        "stylelint": "stylelint '**/*.{less,css}'",
+        "test": "nx test ng-polymorpheus",
+        "typecheck": "tsc --noEmit --skipLibCheck"
+    },
     "commitlint": {
         "extends": [
             "@taiga-ui/commitlint-config"
