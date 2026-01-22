@@ -64,18 +64,12 @@ const TERSER_PLUGIN = new TerserPlugin({
             keep_classnames: false,
             pure_funcs: ['forwardRef'],
         },
-        format: {
-            comments: false,
-        },
+        format: {comments: false},
     },
 });
 
 const config: Configuration = {
-    resolve: {
-        fallback: {
-            punycode: false,
-        },
-    },
+    resolve: {fallback: {punycode: false}},
     module: {
         /**
          * With Webpack 5, the raw-loader is no longer needed.
