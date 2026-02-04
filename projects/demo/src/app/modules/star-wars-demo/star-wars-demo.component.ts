@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {Highlight} from 'ngx-highlightjs';
+import {HighlightAuto} from 'ngx-highlightjs';
 
 import {AbstractDemo} from '../abstract-demo';
 import * as TypeScript from '../star-wars/star-wars.component.ts?raw';
@@ -9,7 +9,7 @@ import {TabsComponent} from '../tabs/tabs.component';
 
 @Component({
     selector: 'app-star-wars-demo',
-    imports: [Highlight, TabsComponent],
+    imports: [HighlightAuto, TabsComponent],
     templateUrl: './star-wars-demo.template.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

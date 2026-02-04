@@ -5,7 +5,7 @@
         [(activeTab)]="activeTab"
     />
 </p>
-<pre><code [highlight]="code"></code></pre>
+<pre><code [highlightAuto]="code"></code></pre>
 <p class="big">
     Let's show the strength of
     <code><strong>*polymorpheusOutlet</strong></code>
@@ -48,12 +48,12 @@
         [(activeTab)]="activeTabTab"
     />
 </p>
-<pre><code [highlight]="tabCode"></code></pre>
+<pre><code [highlightAuto]="tabCode"></code></pre>
 <blockquote>
     To use component with
     <strong>Polymorpheus</strong>
     we need to wrap it with a simple class:
-    <pre><code highlight="const content = new PolymorpheusComponent(TabComponent);"></code></pre>
+    <pre><code [highlightAuto]="'const content = new PolymorpheusComponent(TabComponent);'"></code></pre>
     If you will use it within lazy modules, you can pass
     <code><strong>Injector</strong></code>
     as a second argument.
