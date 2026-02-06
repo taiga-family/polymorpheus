@@ -11,7 +11,7 @@
         [(activeTab)]="activeTab"
     />
 </p>
-<pre><code [highlight]="code"></code></pre>
+<pre><code [highlightAuto]="code"></code></pre>
 <blockquote>
     <strong>Important note:</strong>
     while
@@ -24,7 +24,7 @@
     propagate as expected. You can use
     <code><strong>polymorpheus</strong></code>
     directive to get around this issue:
-    <pre><code highlight="<ng-template #ref=&quot;polymorpheus&quot; polymorpheus>...</ng-template>"></code></pre>
+    <pre><code [highlightAuto]="'<ng-template #ref=&quot;polymorpheus&quot; polymorpheus>...</ng-template>'"></code></pre>
     All this directive does is store reference to
     <code><strong>ChangeDetectorRef</strong></code>
     of definition view so it can mark it for changes when needed. Don't forget to import
