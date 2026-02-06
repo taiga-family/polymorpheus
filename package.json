@@ -109,7 +109,7 @@
         "@taiga-ui/syncer": "0.406.0",
         "@types/estree": "1.0.8",
         "@types/express": "5.0.6",
-        "@types/node": "24.10.9",
+        "@types/node": "24.10.11",
         "express": "4.22.1",
         "highlight.js": "11.11.1",
         "husky": "9.1.7",
