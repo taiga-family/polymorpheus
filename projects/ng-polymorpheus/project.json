@@ -1,39 +1,36 @@
 {
-    "name": "ng-polymorpheus",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "projects/ng-polymorpheus",
+    "name": "ng-polymorpheus",
     "projectType": "library",
+    "sourceRoot": "projects/ng-polymorpheus",
     "targets": {
         "build": {
             "executor": "@angular/build:ng-packagr",
             "options": {
-                "tsConfig": "projects/{projectName}/tsconfig.lib.json",
-                "project": "projects/{projectName}/ng-package.json"
+                "project": "projects/{projectName}/ng-package.json",
+                "tsConfig": "projects/{projectName}/tsconfig.lib.json"
+            }
+        },
+        "publish": {
+            "dependsOn": [
+                {
+                    "dependencies": false,
+                    "params": "ignore",
+                    "target": "build"
+                }
+            ],
+            "executor": "nx:run-commands",
+            "options": {
+                "commands": ["cp ./LICENSE ./README.md ./dist/{projectName}", "npm publish ./dist/{projectName} --ignore-scripts"],
+                "parallel": false
             }
         },
         "test": {
             "executor": "@nx/jest:jest",
-            "outputs": ["{workspaceRoot}/coverage/{projectName}"],
             "options": {
                 "jestConfig": "jest.config.ts"
-            }
-        },
-        "publish": {
-            "executor": "nx:run-commands",
-            "options": {
-                "parallel": false,
-                "commands": [
-                    "cp ./LICENSE ./README.md ./dist/{projectName}",
-                    "npm publish ./dist/{projectName} --ignore-scripts"
-                ]
             },
-            "dependsOn": [
-                {
-                    "target": "build",
-                    "params": "ignore",
-                    "dependencies": false
-                }
-            ]
+            "outputs": ["{workspaceRoot}/coverage/{projectName}"]
         }
     }
 }

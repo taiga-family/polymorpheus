@@ -24,19 +24,17 @@
     },
     "license": "Apache-2.0",
     "author": {
-        "name": "Alex Inkin",
-        "email": "alexander@inkin.ru"
+        "email": "alexander@inkin.ru",
+        "name": "Alex Inkin"
     },
     "contributors": [
         {
-            "name": "Roman Sedov",
             "email": "79601794011@ya.ru",
+            "name": "Roman Sedov",
             "url": "http://marsibarsi.me/"
         }
     ],
-    "workspaces": [
-        "projects/*"
-    ],
+    "workspaces": ["projects/*"],
     "scripts": {
         "build": "nx build demo",
         "build:ssr": "nx build --prod && nx run demo:server:production",
@@ -53,30 +51,17 @@
         "typecheck": "tsc --noEmit --skipLibCheck"
     },
     "commitlint": {
-        "extends": [
-            "@taiga-ui/commitlint-config"
-        ]
+        "extends": ["@taiga-ui/commitlint-config"]
     },
     "lint-staged": {
-        "*.less": [
-            "stylelint --fix"
-        ],
-        "*.{js,ts,html}": [
-            "eslint --fix",
-            "prettier --write"
-        ],
-        "*.{svg,yml,md,less,json}": [
-            "prettier --write"
-        ]
+        "*.less": ["stylelint --fix"],
+        "*.{js,ts,html}": ["eslint --fix", "prettier --write"],
+        "*.{svg,yml,md,less,json}": ["prettier --write"]
     },
-    "browserslist": [
-        "extends @taiga-ui/browserslist-config"
-    ],
+    "browserslist": ["extends @taiga-ui/browserslist-config"],
     "prettier": "@taiga-ui/prettier-config",
     "stylelint": {
-        "extends": [
-            "@taiga-ui/stylelint-config"
-        ]
+        "extends": ["@taiga-ui/stylelint-config"]
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "19.2.19",
@@ -104,9 +89,9 @@
         "@nx/workspace": "21.6.10",
         "@schematics/angular": "19.2.19",
         "@swc/helpers": "0.5.19",
-        "@taiga-ui/configs": "0.406.0",
+        "@taiga-ui/configs": "0.447.0",
         "@taiga-ui/dompurify": "4.1.11",
-        "@taiga-ui/syncer": "0.406.0",
+        "@taiga-ui/syncer": "0.447.0",
         "@types/estree": "1.0.8",
         "@types/express": "5.0.6",
         "@types/node": "24.10.11",
@@ -123,13 +108,7 @@
         "webpack": "5.105.3"
     },
     "syncer": {
-        "includePaths": [
-            "./projects",
-            "./package-lock.json"
-        ],
-        "matchPackageNames": [
-            "@taiga-ui/polymorpheus",
-            "ng-polymorpheus"
-        ]
+        "includePaths": ["./projects", "./package-lock.json"],
+        "matchPackageNames": ["@taiga-ui/polymorpheus", "ng-polymorpheus"]
     }
 }
