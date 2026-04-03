@@ -88,7 +88,7 @@
         "@nx/jest": "21.6.10",
         "@nx/workspace": "21.6.10",
         "@schematics/angular": "19.2.19",
-        "@swc/helpers": "0.5.19",
+        "@swc/helpers": "0.5.21",
         "@taiga-ui/configs": "0.447.0",
         "@taiga-ui/dompurify": "4.1.11",
         "@taiga-ui/syncer": "0.447.0",
