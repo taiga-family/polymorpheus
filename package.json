@@ -34,7 +34,9 @@
             "url": "http://marsibarsi.me/"
         }
     ],
-    "workspaces": ["projects/*"],
+    "workspaces": [
+        "projects/*"
+    ],
     "scripts": {
         "build": "nx build demo",
         "build:ssr": "nx build --prod && nx run demo:server:production",
@@ -51,17 +53,30 @@
         "typecheck": "tsc --noEmit --skipLibCheck"
     },
     "commitlint": {
-        "extends": ["@taiga-ui/commitlint-config"]
+        "extends": [
+            "@taiga-ui/commitlint-config"
+        ]
     },
     "lint-staged": {
-        "*.less": ["stylelint --fix"],
-        "*.{js,ts,html}": ["eslint --fix", "prettier --write"],
-        "*.{svg,yml,md,less,json}": ["prettier --write"]
+        "*.less": [
+            "stylelint --fix"
+        ],
+        "*.{js,ts,html}": [
+            "eslint --fix",
+            "prettier --write"
+        ],
+        "*.{svg,yml,md,less,json}": [
+            "prettier --write"
+        ]
     },
-    "browserslist": ["extends @taiga-ui/browserslist-config"],
+    "browserslist": [
+        "extends @taiga-ui/browserslist-config"
+    ],
     "prettier": "@taiga-ui/prettier-config",
     "stylelint": {
-        "extends": ["@taiga-ui/stylelint-config"]
+        "extends": [
+            "@taiga-ui/stylelint-config"
+        ]
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "19.2.19",
@@ -108,7 +123,13 @@
         "webpack": "5.105.4"
     },
     "syncer": {
-        "includePaths": ["./projects", "./package-lock.json"],
-        "matchPackageNames": ["@taiga-ui/polymorpheus", "ng-polymorpheus"]
+        "includePaths": [
+            "./projects",
+            "./package-lock.json"
+        ],
+        "matchPackageNames": [
+            "@taiga-ui/polymorpheus",
+            "ng-polymorpheus"
+        ]
     }
 }
