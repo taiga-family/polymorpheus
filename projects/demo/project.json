@@ -1,60 +1,60 @@
 {
-    "name": "demo",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "demo",
+    "prefix": "app",
     "projectType": "application",
     "sourceRoot": "projects/demo/src",
-    "prefix": "app",
     "targets": {
         "build": {
-            "executor": "@nx/angular:webpack-browser",
-            "options": {
-                "customWebpackConfig": {
-                    "path": "projects/demo/webpack.config.ts"
-                },
-                "baseHref": "/",
-                "outputPath": "dist/demo/browser",
-                "index": "projects/demo/src/index.html",
-                "main": "projects/demo/src/main.ts",
-                "polyfills": ["zone.js"],
-                "tsConfig": "projects/demo/tsconfig.app.json",
-                "assets": ["projects/demo/src/favicon.ico"],
-                "styles": ["node_modules/highlight.js/styles/idea.css", "projects/demo/src/styles.css"],
-                "scripts": [],
-                "vendorChunk": true,
-                "extractLicenses": false,
-                "buildOptimizer": false,
-                "sourceMap": true,
-                "optimization": false,
-                "namedChunks": true
-            },
             "configurations": {
                 "production": {
+                    "budgets": [
+                        {
+                            "maximumError": "5mb",
+                            "maximumWarning": "2mb",
+                            "type": "initial"
+                        }
+                    ],
+                    "buildOptimizer": true,
+                    "extractLicenses": true,
+                    "namedChunks": false,
                     "optimization": true,
                     "outputHashing": "all",
                     "sourceMap": false,
-                    "namedChunks": false,
-                    "extractLicenses": true,
-                    "vendorChunk": false,
-                    "buildOptimizer": true,
-                    "budgets": [
-                        {
-                            "type": "initial",
-                            "maximumWarning": "2mb",
-                            "maximumError": "5mb"
-                        }
-                    ]
+                    "vendorChunk": false
                 }
+            },
+            "executor": "@nx/angular:webpack-browser",
+            "options": {
+                "assets": ["projects/demo/src/favicon.ico"],
+                "baseHref": "/",
+                "buildOptimizer": false,
+                "customWebpackConfig": {
+                    "path": "projects/demo/webpack.config.ts"
+                },
+                "extractLicenses": false,
+                "index": "projects/demo/src/index.html",
+                "main": "projects/demo/src/main.ts",
+                "namedChunks": true,
+                "optimization": false,
+                "outputPath": "dist/demo/browser",
+                "polyfills": ["zone.js"],
+                "scripts": [],
+                "sourceMap": true,
+                "styles": ["node_modules/highlight.js/styles/idea.css", "projects/demo/src/styles.css"],
+                "tsConfig": "projects/demo/tsconfig.app.json",
+                "vendorChunk": true
             }
         },
         "serve": {
-            "executor": "@nx/angular:dev-server",
-            "options": {
-                "buildTarget": "demo:build"
-            },
             "configurations": {
                 "production": {
                     "buildTarget": "demo:build:production"
                 }
+            },
+            "executor": "@nx/angular:dev-server",
+            "options": {
+                "buildTarget": "demo:build"
             }
         }
     }

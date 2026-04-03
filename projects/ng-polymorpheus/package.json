@@ -23,13 +23,19 @@
         "url": "https://github.com/taiga-family/ng-polymorpheus"
     },
     "license": "Apache-2.0",
+    "contributors": [
+        {
+            "email": "alexander@inkin.ru",
+            "name": "Alex Inkin"
+        },
+        {
+            "email": "r.sedov@tinkoff.ru",
+            "name": "Roman Sedov"
+        }
+    ],
     "peerDependencies": {
         "@angular/core": ">=19.0.0",
         "@angular/platform-browser": ">=19.0.0",
         "tslib": "^2.8.1"
-    },
-    "authors": [
-        "Roman Sedov <r.sedov@tinkoff.ru>",
-        "Alex Inkin <a.inkin@tinkoff.ru>"
-    ]
+    }
 }
