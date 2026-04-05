@@ -5,7 +5,7 @@ import {isPrimitive} from '../utils/is-primitive';
 
 describe('isPrimitive', () => {
     it('should return true for primitive', () => {
-        expect(isPrimitive(undefined)).toBe(true);
+        expect(isPrimitive()).toBe(true);
         expect(isPrimitive(null)).toBe(true);
         expect(isPrimitive(12)).toBe(true);
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion
