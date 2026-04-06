@@ -20,7 +20,7 @@ describe('PolymorpheusTemplate', () => {
         changeDetection: ChangeDetectionStrategy.OnPush,
     })
     class TestComponent {
-        protected context: {$implicit: {name: string}; sum: number} = {
+        protected context = {
             $implicit: {name: 'Alex'},
             sum: 237,
         };
