@@ -37,11 +37,8 @@ export class TabsDemoComponent extends AbstractDemo {
     };
 
     protected readonly content = new PolymorpheusComponent(TabComponent);
-
     protected activeTabTab = 'HTML';
-
     protected customTabs: readonly CustomTab[] | null = null;
-
     public readonly example = {HTML, Style, TypeScript};
 
     protected get tabCode(): string {

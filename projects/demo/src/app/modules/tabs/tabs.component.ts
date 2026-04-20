@@ -13,6 +13,7 @@ import {type ContextWithActive} from '../interfaces';
 export class TabsComponent<T> {
     public readonly tabs = input<readonly T[]>([]);
     public readonly activeTab = model<T>();
+
     public readonly content = input<PolymorpheusContent<ContextWithActive<T>>>(
         ({$implicit}) => String($implicit),
     );

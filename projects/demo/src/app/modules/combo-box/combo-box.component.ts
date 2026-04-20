@@ -42,6 +42,7 @@ export class ComboBoxComponent<T> {
     public readonly stringify = input<(item: T) => string>(String);
     public readonly items = input<readonly T[]>([]);
     public readonly emptyContent = input<PolymorpheusContent<never>>('Nothing is found');
+
     public readonly content = input<PolymorpheusContent<ContextWithActive<T>>>(
         ({$implicit}: ContextWithActive<T>) => String($implicit),
     );
