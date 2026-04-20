@@ -27,11 +27,11 @@ import {PolymorpheusTemplate} from './template';
 export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
     private readonly vcr = inject(ViewContainerRef);
     private readonly i = inject(INJECTOR);
+
     private readonly t: TemplateRef<PolymorpheusContext<PolymorpheusPrimitive>> =
         inject(TemplateRef);
 
     private c?: ComponentRef<unknown>;
-
     public content: PolymorpheusContent<C> = '';
     public context?: C;
 
