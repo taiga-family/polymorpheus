@@ -8,11 +8,11 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-      - uses: taiga-family/ci/actions/setup/variables@v1.201.0
-      - uses: taiga-family/ci/actions/setup/node@v1.201.0
+      - uses: taiga-family/ci/actions/setup/variables@ef883fc6417f920333ffa8b903683d7d6b914615 # v1.201.0
+      - uses: taiga-family/ci/actions/setup/node@ef883fc6417f920333ffa8b903683d7d6b914615 # v1.201.0
 
       - run: |
           if [[ "${{ env.SUPPORT_AUTO_PUSH }}" == "true" ]]; then
@@ -29,8 +29,8 @@ jobs:
       - run: npx nx build demo
       - run: npx nx build ng-polymorpheus
       - run: npx nx test ng-polymorpheus
-      - uses: codecov/codecov-action@v6
-      - uses: taiga-family/ci/actions/auto/push@v1.201.0
+      - uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6
+      - uses: taiga-family/ci/actions/auto/push@ef883fc6417f920333ffa8b903683d7d6b914615 # v1.201.0
         with:
           token: ${{ secrets.TAIGA_FAMILY_BOT_PAT }}
 
