@@ -95,19 +95,13 @@ const config: Configuration = {
 
 // noinspection JSUnusedGlobalSymbols
 export default (ngConfigs: Configuration): Configuration => {
-    const ngRules = ([...(ngConfigs.module?.rules || [])] as RuleSetRule[]).map(
-        (rule) => {
-            if (
-                typeof rule === 'object' &&
-                DO_NOT_MUTATE_RAW_FILE_CONTENTS.some(
-                    (pattern) => rule.test instanceof RegExp && rule.test.test(pattern),
-                )
-            ) {
-                return {...rule, resourceQuery: {not: [RAW_TS_QUERY]}};
-            }
-
-            return rule;
-        },
+    const ngRules = ([...(ngConfigs.module?.rules || [])] as RuleSetRule[]).map((rule) =>
+        typeof rule === 'object' &&
+        DO_NOT_MUTATE_RAW_FILE_CONTENTS.some(
+            (pattern) => rule.test instanceof RegExp && rule.test.test(pattern),
+        )
+            ? {...rule, resourceQuery: {not: [RAW_TS_QUERY]}}
+            : rule,
     );
 
     return merge({...ngConfigs, module: {...ngConfigs.module, rules: ngRules}}, config);
