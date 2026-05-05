@@ -88,15 +88,13 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
     }
 
     private getContext(): C | PolymorpheusContext<any> | undefined {
-        if (isTemplate(this.content) || isComponent(this.content)) {
-            return this.context;
-        }
-
-        return new PolymorpheusContext(
-            typeof this.content === 'function'
-                ? this.content(this.context ?? ({} as any))
-                : this.content,
-        );
+        return isTemplate(this.content) || isComponent(this.content)
+            ? this.context
+            : new PolymorpheusContext(
+                  typeof this.content === 'function'
+                      ? this.content(this.context ?? ({} as any))
+                      : this.content,
+              );
     }
 
     private process(content: PolymorpheusComponent<unknown>, proxy?: C): void {
@@ -143,9 +141,5 @@ function isTemplate<C>(
 function ensureContext<C>(
     context: C | PolymorpheusContext<any> | undefined,
 ): C | PolymorpheusContext<any> | undefined {
-    if (context && isPrimitive(context)) {
-        return new PolymorpheusContext(context);
-    }
-
-    return context;
+    return context && isPrimitive(context) ? new PolymorpheusContext(context) : context;
 }
