@@ -45,7 +45,7 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
     public ngOnChanges({content}: SimpleChanges): void {
         const context = this.getContext();
 
-        this.update();
+        this.updateComponentInputs();
         this.c?.injector.get(ChangeDetectorRef).markForCheck();
 
         if (!content) {
@@ -54,33 +54,25 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
 
         this.vcr.clear();
 
-        const proxy =
-            context &&
-            (new Proxy(ensureContext(context) as object, {
-                get: (_, key) =>
-                    ensureContext(this.getContext())?.[
-                        key as keyof (C | PolymorpheusContext<any>)
-                    ],
-            }) as unknown as C);
-
+        const liveContext = this.createLiveContextProxy();
         if (isComponent(this.content)) {
-            this.process(this.content, proxy);
-            this.update();
+            this.createComponent(this.content, liveContext);
+            this.updateComponentInputs();
         } else if (
             (context instanceof PolymorpheusContext && context.$implicit) != null
         ) {
-            this.vcr.createEmbeddedView(this.template, proxy, {injector: this.i});
+            this.vcr.createEmbeddedView(this.template, liveContext, {injector: this.i});
         }
     }
 
     public ngDoCheck(): void {
-        if (isDirective(this.content)) {
+        if (isPolymorpheusTemplate(this.content)) {
             this.content.check();
         }
     }
 
     private get template(): TemplateRef<unknown> {
-        if (isDirective(this.content)) {
+        if (isPolymorpheusTemplate(this.content)) {
             return this.content.template;
         }
 
@@ -97,13 +89,13 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
               );
     }
 
-    private process(content: PolymorpheusComponent<unknown>, proxy?: C): void {
+    private createComponent(content: PolymorpheusComponent<unknown>, proxy?: C): void {
         const injector = content.createInjector(this.i, proxy);
 
         this.c = this.vcr.createComponent(content.component, {injector});
     }
 
-    private update(): void {
+    private updateComponentInputs(): void {
         const {context, content} = this;
 
         if (!context || typeof context !== 'object' || !isComponent(content)) {
@@ -118,9 +110,25 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
             }
         }
     }
+
+    /**
+     * Creates a stable context object for Angular templates/injection.
+     *
+     * The proxy always reads values from the latest context,
+     * so embedded views and injected context do not become stale
+     * when `this.context` changes.
+     */
+    private createLiveContextProxy(): C {
+        return   (new Proxy(ensureContext(this.context) as object, {
+            get: (_, key) =>
+                ensureContext(this.getContext())?.[
+                    key as keyof (C | PolymorpheusContext<any>)
+                    ],
+        })   as unknown as C)  ;
+    }
 }
 
-function isDirective<C>(
+function isPolymorpheusTemplate<C>(
     content: PolymorpheusContent<C>,
 ): content is PolymorpheusTemplate<C> {
     return content instanceof PolymorpheusTemplate;
@@ -135,11 +143,11 @@ function isComponent<C>(
 function isTemplate<C>(
     content: PolymorpheusContent<C>,
 ): content is PolymorpheusTemplate<C> | TemplateRef<C> {
-    return isDirective(content) || content instanceof TemplateRef;
+    return isPolymorpheusTemplate(content) || content instanceof TemplateRef;
 }
 
 function ensureContext<C>(
     context: C | PolymorpheusContext<any> | undefined,
 ): C | PolymorpheusContext<any> | undefined {
-    return context && isPrimitive(context) ? new PolymorpheusContext(context) : context;
+    return isPrimitive(context) ? new PolymorpheusContext(context) : context;
 }

@@ -14,6 +14,7 @@ import {
     PolymorpheusOutlet,
     PolymorpheusTemplate,
 } from '@taiga-ui/polymorpheus';
+import {PolymorpheusContext} from "../classes/context";
 
 let COUNTER = 0;
 
@@ -103,6 +104,14 @@ describe('PolymorpheusOutlet', () => {
     })
     class WithInputs {
         public value = '';
+    }
+
+    @Component({
+        template: 'Component:{{ context.$implicit }}',
+        changeDetection: ChangeDetectionStrategy.Default,
+    })
+    class PrimitiveContextComponent {
+        public readonly context =  injectContext<PolymorpheusContext<boolean>>();
     }
 
     let fixture: ComponentFixture<TestComponent>;
@@ -305,6 +314,23 @@ describe('PolymorpheusOutlet', () => {
             fixture.detectChanges();
 
             expect(text()).toBe('New value');
+        });
+    });
+
+    describe('Falsy context values', () => {
+
+        it.each([
+            [false, 'false'],
+            [0, '0'],
+            ['', ''],
+            [null, ''],
+            [undefined, ''],
+        ])('provides falsy primitive context to component: %p', (context, expected) => {
+            testComponent.context = context;
+            testComponent.content = new PolymorpheusComponent(PrimitiveContextComponent);
+            fixture.detectChanges();
+
+            expect(text()).toBe(`Component:${(expected)}`);
         });
     });
 });
