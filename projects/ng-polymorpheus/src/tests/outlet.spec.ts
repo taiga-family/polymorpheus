@@ -317,15 +317,14 @@ describe('PolymorpheusOutlet', () => {
         });
     });
 
-    describe('Falsy context values', () => {
-
+    describe('Falsy primitive context values for component content', () => {
         it.each([
             [false, 'false'],
             [0, '0'],
             ['', ''],
             [null, ''],
             [undefined, ''],
-        ])('provides falsy primitive context to component: %p', (context, expected) => {
+        ])('provides %p through injectContext', (context, expected) => {
             testComponent.context = context;
             testComponent.content = new PolymorpheusComponent(PrimitiveContextComponent);
             fixture.detectChanges();

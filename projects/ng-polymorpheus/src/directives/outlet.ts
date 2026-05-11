@@ -119,7 +119,7 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
      * when `this.context` changes.
      */
     private createLiveContextProxy(): C {
-        return   (new Proxy(ensureContext(this.context) as object, {
+        return (new Proxy({}, {
             get: (_, key) =>
                 ensureContext(this.getContext())?.[
                     key as keyof (C | PolymorpheusContext<any>)
