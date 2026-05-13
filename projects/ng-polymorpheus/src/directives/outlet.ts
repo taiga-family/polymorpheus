@@ -55,8 +55,12 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
         this.vcr.clear();
 
         const liveContext = this.createLiveContextProxy();
+
         if (isComponent(this.content)) {
-            this.createComponent(this.content, liveContext);
+            this.createComponent(
+                this.content,
+                this.context === undefined ? undefined : liveContext,
+            );
             this.updateComponentInputs();
         } else if (
             (context instanceof PolymorpheusContext && context.$implicit) != null
@@ -119,12 +123,23 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
      * when `this.context` changes.
      */
     private createLiveContextProxy(): C {
-        return (new Proxy({}, {
-            get: (_, key) =>
-                ensureContext(this.getContext())?.[
-                    key as keyof (C | PolymorpheusContext<any>)
-                    ],
-        })   as unknown as C)  ;
+        const getEnsuredContext = () => ensureContext(this.getContext());
+
+        return new Proxy(getEnsuredContext() as object, {
+            get: (_, key) => getEnsuredContext()?.[key as keyof (C | PolymorpheusContext<any>)],
+            has: (_, key) => key in (getEnsuredContext() ?? {}),
+            ownKeys: () => Reflect.ownKeys(getEnsuredContext() as object),
+            getOwnPropertyDescriptor: (_, key) => {
+                const context = getEnsuredContext() as object;
+
+                return key in context
+                    ? {
+                          enumerable: true,
+                          configurable: true,
+                      }
+                    : undefined;
+            },
+        }) as unknown as C;
     }
 }
 

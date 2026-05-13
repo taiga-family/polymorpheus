@@ -13,6 +13,7 @@ import {
     type PolymorpheusContent,
     PolymorpheusOutlet,
     PolymorpheusTemplate,
+    provideContext,
 } from '@taiga-ui/polymorpheus';
 import {PolymorpheusContext} from "../classes/context";
 
@@ -110,8 +111,8 @@ describe('PolymorpheusOutlet', () => {
         template: 'Component:{{ context.$implicit }}',
         changeDetection: ChangeDetectionStrategy.Default,
     })
-    class PrimitiveContextComponent {
-        public readonly context =  injectContext<PolymorpheusContext<boolean>>();
+    class JustInjectContextComponent {
+        public readonly context = injectContext<PolymorpheusContext<boolean>>();
     }
 
     let fixture: ComponentFixture<TestComponent>;
@@ -323,13 +324,127 @@ describe('PolymorpheusOutlet', () => {
             [0, '0'],
             ['', ''],
             [null, ''],
-            [undefined, ''],
         ])('provides %p through injectContext', (context, expected) => {
             testComponent.context = context;
-            testComponent.content = new PolymorpheusComponent(PrimitiveContextComponent);
+            testComponent.content = new PolymorpheusComponent(JustInjectContextComponent);
             fixture.detectChanges();
 
-            expect(text()).toBe(`Component:${(expected)}`);
+            expect(text()).toBe(`Component:${expected}`);
         });
+    });
+
+    it('throws NullInjectorError when context input is not provided and parent has no context', () => {
+        testComponent.context = undefined;
+        testComponent.content = new PolymorpheusComponent(JustInjectContextComponent);
+
+        expect(() => fixture.detectChanges()).toThrow();
+    });
+
+    it('does not shadow parent context when context input is not provided', () => {
+        @Component({
+            imports: [PolymorpheusOutlet],
+            template: `
+                <ng-container *polymorpheusOutlet="content" />
+            `,
+            changeDetection: ChangeDetectionStrategy.Default,
+            providers: [provideContext({$implicit: 'parent'})],
+        })
+        class WithoutContextInput {
+            public content = new PolymorpheusComponent(ComponentContent);
+        }
+
+        const fallbackFixture = TestBed.createComponent(WithoutContextInput);
+
+        fallbackFixture.detectChanges();
+
+        expect(fallbackFixture.nativeElement.textContent.trim()).toBe(
+            'Component: parent',
+        );
+    });
+
+    it('updates proxy shape when context keys change', () => {
+        @Component({
+            template: '{{ keys }}',
+            changeDetection: ChangeDetectionStrategy.Default,
+        })
+        class ContextShapeComponent {
+            public readonly context = injectContext<any>();
+
+            public get keys(): string {
+                return Object.keys(this.context).sort().join(',');
+            }
+        }
+
+        testComponent.context = {
+            $implicit: {name: 'Ivan', age: 5},
+            loading: true,
+        };
+
+        testComponent.content = new PolymorpheusComponent(ContextShapeComponent);
+
+        fixture.detectChanges();
+
+        expect(text()).toBe('$implicit,loading');
+
+        testComponent.context = {
+            $implicit: {label: 'Igor', id: 3},
+            error: false,
+        };
+
+        fixture.detectChanges();
+
+        expect(text()).toBe('$implicit,error');
+    });
+
+    it('updates proxy shape when context changes from null to object', () => {
+        @Component({
+            template: '{{ keys }}',
+            changeDetection: ChangeDetectionStrategy.Default,
+        })
+        class ContextShapeComponent {
+            public readonly context = injectContext<any>();
+
+            public get keys(): string {
+                return Object.keys(this.context).sort().join(',');
+            }
+        }
+
+        testComponent.context = null;
+        testComponent.content = new PolymorpheusComponent(ContextShapeComponent);
+
+        fixture.detectChanges();
+
+        expect(text()).toBe('$implicit');
+
+        testComponent.context = {
+            $implicit: 'value',
+            loading: true,
+        };
+
+        fixture.detectChanges();
+
+        expect(text()).toBe('$implicit,loading');
+    });
+    it('keeps primitive context object behavior', () => {
+        @Component({
+            template: '{{ isContext }}:{{ hasImplicit }}:{{ keys }}:{{ spread }}:{{ json }}',
+            changeDetection: ChangeDetectionStrategy.Default,
+        })
+        class ContextShapeComponent {
+            public readonly context = injectContext<PolymorpheusContext<string>>();
+
+            public readonly isContext = this.context instanceof PolymorpheusContext;
+            public readonly hasImplicit = '$implicit' in this.context;
+            public readonly keys = Object.keys(this.context).join(',');
+            public readonly spread = Object.keys({...this.context}).join(',');
+            public readonly json = JSON.stringify(this.context);
+        }
+
+        testComponent.context = 'value';
+        testComponent.content = new PolymorpheusComponent(ContextShapeComponent);
+
+        fixture.detectChanges();
+
+        expect(text()).toBe('true:true:$implicit:$implicit:{"$implicit":"value"}');
     });
 });
