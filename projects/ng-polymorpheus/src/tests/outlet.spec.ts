@@ -341,13 +341,16 @@ describe('PolymorpheusOutlet', () => {
             },
         );
 
-        it('does not treat zero as missing content', () => {
+        it.each([
+            [0, 'Number: 0'],
+            ['', 'String:'],
+        ])('does not treat %p as missing content', (content, expected) => {
             testComponent.polymorphic = true;
             testComponent.context = {$implicit: 'fallback'};
-            testComponent.content = 0;
+            testComponent.content = content;
             fixture.detectChanges();
 
-            expect(text()).toBe('Number: 0');
+            expect(text()).toBe(expected);
         });
     });
 });
