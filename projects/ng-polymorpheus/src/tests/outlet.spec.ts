@@ -327,16 +327,19 @@ describe('PolymorpheusOutlet', () => {
             destroyedContexts.length = 0;
         });
 
-        it('keeps context in ngOnDestroy when switching from component to null', () => {
-            testComponent.context = {$implicit: 'string'};
-            testComponent.content = new PolymorpheusComponent(DestroyableContent);
-            fixture.detectChanges();
+        it.each([null, '', 0])(
+            'keeps context in ngOnDestroy when switching from component to %p',
+            (content) => {
+                testComponent.context = {$implicit: 'string'};
+                testComponent.content = new PolymorpheusComponent(DestroyableContent);
+                fixture.detectChanges();
 
-            testComponent.content = null;
-            fixture.detectChanges();
+                testComponent.content = content;
+                fixture.detectChanges();
 
-            expect(destroyedContexts).toEqual(['string']);
-        });
+                expect(destroyedContexts).toEqual(['string']);
+            },
+        );
 
         it('does not treat zero as missing content', () => {
             testComponent.polymorphic = true;
