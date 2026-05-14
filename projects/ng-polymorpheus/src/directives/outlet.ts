@@ -88,7 +88,7 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
     }
 
     private getContext(): C | PolymorpheusContext<any> | undefined {
-        return isTemplate(this.content) || isComponent(this.content)
+        return !this.content || isTemplate(this.content) || isComponent(this.content)
             ? this.context
             : new PolymorpheusContext(
                   typeof this.content === 'function'
