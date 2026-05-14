@@ -2,6 +2,7 @@ import {
     ChangeDetectionStrategy,
     Component,
     ElementRef,
+    type OnDestroy,
     type TemplateRef,
     viewChild,
 } from '@angular/core';
@@ -16,6 +17,7 @@ import {
 } from '@taiga-ui/polymorpheus';
 
 let COUNTER = 0;
+const destroyedContexts: unknown[] = [];
 
 describe('PolymorpheusOutlet', () => {
     @Component({
@@ -103,6 +105,18 @@ describe('PolymorpheusOutlet', () => {
     })
     class WithInputs {
         public value = '';
+    }
+
+    @Component({
+        template: '',
+        changeDetection: ChangeDetectionStrategy.OnPush,
+    })
+    class DestroyableContent implements OnDestroy {
+        public readonly context = injectContext<any>();
+
+        public ngOnDestroy(): void {
+            destroyedContexts.push(this.context.$implicit);
+        }
     }
 
     let fixture: ComponentFixture<TestComponent>;
@@ -305,6 +319,32 @@ describe('PolymorpheusOutlet', () => {
             fixture.detectChanges();
 
             expect(text()).toBe('New value');
+        });
+    });
+
+    describe('DestroyableContent', () => {
+        beforeEach(() => {
+            destroyedContexts.length = 0;
+        });
+
+        it('keeps context in ngOnDestroy when switching from component to null', () => {
+            testComponent.context = {$implicit: 'string'};
+            testComponent.content = new PolymorpheusComponent(DestroyableContent);
+            fixture.detectChanges();
+
+            testComponent.content = null;
+            fixture.detectChanges();
+
+            expect(destroyedContexts).toEqual(['string']);
+        });
+
+        it('does not treat zero as missing content', () => {
+            testComponent.polymorphic = true;
+            testComponent.context = {$implicit: 'fallback'};
+            testComponent.content = 0;
+            fixture.detectChanges();
+
+            expect(text()).toBe('Number: 0');
         });
     });
 });

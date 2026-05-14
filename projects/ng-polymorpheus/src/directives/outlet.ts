@@ -44,6 +44,7 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
 
     public ngOnChanges({content}: SimpleChanges): void {
         const context = this.getContext();
+        const component = isComponent(this.content);
 
         this.update();
         this.c?.injector.get(ChangeDetectorRef).markForCheck();
@@ -58,7 +59,7 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
             context &&
             (new Proxy(ensureContext(context) as object, {
                 get: (_, key) =>
-                    ensureContext(this.getContext())?.[
+                    ensureContext(component ? this.context : this.getContext())?.[
                         key as keyof (C | PolymorpheusContext<any>)
                     ],
             }) as unknown as C);
@@ -88,7 +89,7 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
     }
 
     private getContext(): C | PolymorpheusContext<any> | undefined {
-        return !this.content || isTemplate(this.content) || isComponent(this.content)
+        return isTemplate(this.content) || isComponent(this.content)
             ? this.context
             : new PolymorpheusContext(
                   typeof this.content === 'function'
