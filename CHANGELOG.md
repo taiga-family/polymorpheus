@@ -1,3 +1,13 @@
+### [5.0.1](https://github.com/taiga-family/polymorpheus/compare/v5.0.0...v5.0.1) (2026-05-15)
+
+### 🐞 Bug Fixes
+
+- **outlet**: allow falsy context ([#1145](https://github.com/taiga-family/polymorpheus/pull/1145))
+  [(fd4a110)](https://github.com/taiga-family/polymorpheus/commit/fd4a1100649c749336aee56cf75d017d348bcfed)
+- **outlet**: fix context in &#x60;ngOnDestroy&#x60; when switching from component to &#x60;null&#x60;
+  ([#1144](https://github.com/taiga-family/polymorpheus/pull/1144))
+  [(f9daa7a)](https://github.com/taiga-family/polymorpheus/commit/f9daa7af5fd4372480b57c2881815de735af6289)
+
 ## [5.0.0](https://github.com/taiga-family/polymorpheus/compare/v4.9.0...v5.0.0) (2025-12-16)
 
 ### 🚀 Features

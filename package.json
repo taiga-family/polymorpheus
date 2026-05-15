@@ -1,6 +1,6 @@
 {
     "name": "ng-polymorpheus",
-    "version": "5.0.0",
+    "version": "5.0.1",
     "private": true,
     "description": "This is a small library for customizing components appearance",
     "keywords": [
