@@ -86,12 +86,18 @@ describe('PolymorpheusOutlet', () => {
     }
 
     @Component({
-        template: 'Component: {{ context.$implicit }}',
+        template: `
+            @if (context == null) {
+                No context
+            } @else {
+                Component: {{ context.$implicit }}
+            }
+        `,
         // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
         changeDetection: ChangeDetectionStrategy.Default,
     })
     class ComponentContent {
-        public readonly context = injectContext();
+        public readonly context = injectContext({optional: true});
 
         constructor() {
             COUNTER++;
@@ -283,6 +289,17 @@ describe('PolymorpheusOutlet', () => {
             expect(text()).toBe(expected);
         });
 
+        it.each([undefined, null])(
+            'does not provide %p as component context',
+            (context) => {
+                testComponent.context = context;
+                testComponent.content = new PolymorpheusComponent(ComponentContent);
+                fixture.detectChanges();
+
+                expect(text()).toBe('No context');
+            },
+        );
+
         it('does not recreate component if context changes to the same shape', () => {
             testComponent.context = {$implicit: 'string'};
             testComponent.content = new PolymorpheusComponent(ComponentContent);
@@ -295,14 +312,6 @@ describe('PolymorpheusOutlet', () => {
 
             expect(text()).toBe('Component: number');
             expect(COUNTER).toBe(counter);
-        });
-
-        it('create a non-object context', () => {
-            testComponent.context = 'Hello World';
-            testComponent.content = new PolymorpheusComponent(ComponentContent);
-            fixture.detectChanges();
-
-            expect(text()).toBe('Component: Hello World');
         });
     });
 
