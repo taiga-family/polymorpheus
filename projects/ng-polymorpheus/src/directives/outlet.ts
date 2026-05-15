@@ -55,14 +55,12 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
 
         this.vcr.clear();
 
-        const proxy =
-            context &&
-            (new Proxy(ensureContext(context) as object, {
-                get: (_, key) =>
-                    ensureContext(component ? this.context : this.getContext())?.[
-                        key as keyof (C | PolymorpheusContext<any>)
-                    ],
-            }) as unknown as C);
+        const proxy = new Proxy(ensureContext(context) as object, {
+            get: (_, key) =>
+                ensureContext(component ? this.context : this.getContext())?.[
+                    key as keyof (C | PolymorpheusContext<any>)
+                ],
+        }) as unknown as C;
 
         if (isComponent(this.content)) {
             this.process(this.content, proxy);
@@ -142,5 +140,5 @@ function isTemplate<C>(
 function ensureContext<C>(
     context: C | PolymorpheusContext<any> | undefined,
 ): C | PolymorpheusContext<any> | undefined {
-    return context && isPrimitive(context) ? new PolymorpheusContext(context) : context;
+    return isPrimitive(context) ? new PolymorpheusContext(context) : context;
 }

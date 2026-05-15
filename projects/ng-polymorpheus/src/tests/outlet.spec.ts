@@ -270,12 +270,17 @@ describe('PolymorpheusOutlet', () => {
     });
 
     describe('PolymorpheusComponent', () => {
-        it('creates component', () => {
-            testComponent.context = {$implicit: 'string'};
+        it.each([
+            [{$implicit: 'string'}, 'Component: string'],
+            [0, 'Component: 0'],
+            ['', 'Component:'],
+            [false, 'Component: false'],
+        ])('created component with %p as context', (context, expected) => {
+            testComponent.context = context;
             testComponent.content = new PolymorpheusComponent(ComponentContent);
             fixture.detectChanges();
 
-            expect(text()).toBe('Component: string');
+            expect(text()).toBe(expected);
         });
 
         it('does not recreate component if context changes to the same shape', () => {
