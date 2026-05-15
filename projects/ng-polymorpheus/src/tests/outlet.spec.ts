@@ -245,24 +245,42 @@ describe('PolymorpheusOutlet', () => {
         });
     });
 
-    it('templateRef', () => {
-        testComponent.context = {$implicit: 'string'};
-        testComponent.content = testComponent.template();
-        fixture.detectChanges();
+    describe('Template', () => {
+        it.each([
+            [{$implicit: 'string'}, '<strong>string</strong>'],
+            [0, '<strong>0</strong>'],
+            ['', '<strong></strong>'],
+            [false, '<strong>false</strong>'],
+            [null, '<strong></strong>'],
+            [undefined, '<strong></strong>'],
+        ])('renders TemplateRef with %p as context', (context, expected) => {
+            testComponent.context = context;
+            testComponent.content = testComponent.template();
+            fixture.detectChanges();
 
-        expect(html()).toContain('<strong>string</strong>');
+            expect(html()).toContain(expected);
+        });
     });
 
     describe('PolymorpheusTemplate', () => {
         beforeEach(() => {
             testComponent.context = {$implicit: 'string'};
-            testComponent.content = testComponent.polymorpheus()!;
+            testComponent.content = testComponent.polymorpheus();
         });
 
-        it('works', () => {
+        it.each([
+            [{$implicit: 'string'}, '<strong>string</strong>'],
+            [0, '<strong>0</strong>'],
+            ['', '<strong></strong>'],
+            [false, '<strong>false</strong>'],
+            [null, '<strong></strong>'],
+            [undefined, '<strong></strong>'],
+        ])('renders PolymorpheusTemplate with %p as context', (context, expected) => {
+            testComponent.context = context;
+            testComponent.content = testComponent.polymorpheus();
             fixture.detectChanges();
 
-            expect(html()).toContain('<strong>string</strong>');
+            expect(html()).toContain(expected);
         });
 
         it('triggers change detection', () => {
