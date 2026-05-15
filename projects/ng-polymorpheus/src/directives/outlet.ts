@@ -27,10 +27,7 @@ import {PolymorpheusTemplate} from './template';
 export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
     private readonly vcr = inject(ViewContainerRef);
     private readonly i = inject(INJECTOR);
-
-    private readonly t: TemplateRef<PolymorpheusContext<PolymorpheusPrimitive>> =
-        inject(TemplateRef);
-
+    private readonly t = inject(TemplateRef);
     private c?: ComponentRef<unknown>;
     public content: PolymorpheusContent<C> = '';
     public context?: C;
@@ -55,17 +52,13 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
 
         this.vcr.clear();
 
-        const proxy =
-            context &&
-            (new Proxy(ensureContext(context) as object, {
-                get: (_, key) =>
-                    ensureContext(component ? this.context : this.getContext())?.[
-                        key as keyof (C | PolymorpheusContext<any>)
-                    ],
-            }) as unknown as C);
+        const proxy = new Proxy(ensureContext(context) as object, {
+            get: (_, key: keyof (C | PolymorpheusContext<any>)) =>
+                ensureContext(component ? this.context : this.getContext())?.[key],
+        }) as C;
 
         if (isComponent(this.content)) {
-            this.process(this.content, proxy);
+            this.process(this.content, context == null ? undefined : proxy);
             this.update();
         } else if (
             (context instanceof PolymorpheusContext && context.$implicit) != null
@@ -99,23 +92,21 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
     }
 
     private process(content: PolymorpheusComponent<unknown>, proxy?: C): void {
-        const injector = content.createInjector(this.i, proxy);
-
-        this.c = this.vcr.createComponent(content.component, {injector});
+        this.c = this.vcr.createComponent(content.component, {
+            injector: content.createInjector(this.i, proxy),
+        });
     }
 
     private update(): void {
-        const {context, content} = this;
-
-        if (!context || typeof context !== 'object' || !isComponent(content)) {
+        if (typeof this.context !== 'object' || !isComponent(this.content)) {
             return;
         }
 
-        const {inputs = []} = reflectComponentType(content.component) || {};
+        const {inputs = []} = reflectComponentType(this.content.component) || {};
 
         for (const {templateName} of inputs) {
-            if (templateName in context) {
-                this.c?.setInput(templateName, context[templateName as keyof C]);
+            if (templateName in (this.context ?? {})) {
+                this.c?.setInput(templateName, this.context?.[templateName as keyof C]);
             }
         }
     }
@@ -140,7 +131,7 @@ function isTemplate<C>(
 }
 
 function ensureContext<C>(
-    context: C | PolymorpheusContext<any> | undefined,
+    context?: C | PolymorpheusContext<any>,
 ): C | PolymorpheusContext<any> | undefined {
-    return context && isPrimitive(context) ? new PolymorpheusContext(context) : context;
+    return isPrimitive(context) ? new PolymorpheusContext(context) : context;
 }

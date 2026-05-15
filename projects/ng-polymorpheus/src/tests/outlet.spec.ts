@@ -86,12 +86,18 @@ describe('PolymorpheusOutlet', () => {
     }
 
     @Component({
-        template: 'Component: {{ context.$implicit }}',
+        template: `
+            @if (context == null) {
+                No context
+            } @else {
+                Component: {{ context.$implicit }}
+            }
+        `,
         // eslint-disable-next-line @angular-eslint/prefer-on-push-component-change-detection
         changeDetection: ChangeDetectionStrategy.Default,
     })
     class ComponentContent {
-        public readonly context = injectContext();
+        public readonly context = injectContext({optional: true});
 
         constructor() {
             COUNTER++;
@@ -239,24 +245,42 @@ describe('PolymorpheusOutlet', () => {
         });
     });
 
-    it('templateRef', () => {
-        testComponent.context = {$implicit: 'string'};
-        testComponent.content = testComponent.template();
-        fixture.detectChanges();
+    describe('Template', () => {
+        it.each([
+            [{$implicit: 'string'}, '<strong>string</strong>'],
+            [0, '<strong>0</strong>'],
+            ['', '<strong></strong>'],
+            [false, '<strong>false</strong>'],
+            [null, '<strong></strong>'],
+            [undefined, '<strong></strong>'],
+        ])('renders TemplateRef with %p as context', (context, expected) => {
+            testComponent.context = context;
+            testComponent.content = testComponent.template();
+            fixture.detectChanges();
 
-        expect(html()).toContain('<strong>string</strong>');
+            expect(html()).toContain(expected);
+        });
     });
 
     describe('PolymorpheusTemplate', () => {
         beforeEach(() => {
             testComponent.context = {$implicit: 'string'};
-            testComponent.content = testComponent.polymorpheus()!;
+            testComponent.content = testComponent.polymorpheus();
         });
 
-        it('works', () => {
+        it.each([
+            [{$implicit: 'string'}, '<strong>string</strong>'],
+            [0, '<strong>0</strong>'],
+            ['', '<strong></strong>'],
+            [false, '<strong>false</strong>'],
+            [null, '<strong></strong>'],
+            [undefined, '<strong></strong>'],
+        ])('renders PolymorpheusTemplate with %p as context', (context, expected) => {
+            testComponent.context = context;
+            testComponent.content = testComponent.polymorpheus();
             fixture.detectChanges();
 
-            expect(html()).toContain('<strong>string</strong>');
+            expect(html()).toContain(expected);
         });
 
         it('triggers change detection', () => {
@@ -270,13 +294,30 @@ describe('PolymorpheusOutlet', () => {
     });
 
     describe('PolymorpheusComponent', () => {
-        it('creates component', () => {
-            testComponent.context = {$implicit: 'string'};
+        it.each([
+            [{$implicit: 'string'}, 'Component: string'],
+            [0, 'Component: 0'],
+            ['', 'Component:'],
+            ['Hello World', 'Component: Hello World'],
+            [false, 'Component: false'],
+        ])('created component with %p as context', (context, expected) => {
+            testComponent.context = context;
             testComponent.content = new PolymorpheusComponent(ComponentContent);
             fixture.detectChanges();
 
-            expect(text()).toBe('Component: string');
+            expect(text()).toBe(expected);
         });
+
+        it.each([undefined, null])(
+            'does not provide %p as component context',
+            (context) => {
+                testComponent.context = context;
+                testComponent.content = new PolymorpheusComponent(ComponentContent);
+                fixture.detectChanges();
+
+                expect(text()).toBe('No context');
+            },
+        );
 
         it('does not recreate component if context changes to the same shape', () => {
             testComponent.context = {$implicit: 'string'};
@@ -290,14 +331,6 @@ describe('PolymorpheusOutlet', () => {
 
             expect(text()).toBe('Component: number');
             expect(COUNTER).toBe(counter);
-        });
-
-        it('create a non-object context', () => {
-            testComponent.context = 'Hello World';
-            testComponent.content = new PolymorpheusComponent(ComponentContent);
-            fixture.detectChanges();
-
-            expect(text()).toBe('Component: Hello World');
         });
     });
 
