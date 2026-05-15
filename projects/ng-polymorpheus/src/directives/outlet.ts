@@ -60,7 +60,9 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
         if (isComponent(this.content)) {
             this.process(this.content, context == null ? undefined : proxy);
             this.update();
-        } else if (context instanceof PolymorpheusContext && context.$implicit != null) {
+        } else if (
+            (context instanceof PolymorpheusContext && context.$implicit) != null
+        ) {
             this.vcr.createEmbeddedView(this.template, proxy, {injector: this.i});
         }
     }
