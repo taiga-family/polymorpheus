@@ -280,6 +280,7 @@ describe('PolymorpheusOutlet', () => {
             [{$implicit: 'string'}, 'Component: string'],
             [0, 'Component: 0'],
             ['', 'Component:'],
+            ['Hello World', 'Component: Hello World'],
             [false, 'Component: false'],
         ])('created component with %p as context', (context, expected) => {
             testComponent.context = context;
