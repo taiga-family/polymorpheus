@@ -42,19 +42,32 @@ You can also
 
 ### Accessing context in dynamic component
 
-If you use component content you can inject context with `POLYMORPHEUS_CONTEXT` token.
+If you use component content you can inject context with `POLYMORPHEUS_CONTEXT` token or `injectContext` helper.
 
-**Important!** This object is _live_ so if you change it, your component will not be recreated:
+**Important:** this object is _live_ so if you change it, your component view will be updated as well automatically.
 
 ```ts
+import {injectContext} from '@taiga-ui/polymorpheus';
+
 @Component({
-  template: `
-    {{ context.active }}
-  `, // <-- this will automatically update
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: '{{ context.active }}', // <-- this will automatically update
 })
 export class MyComponent {
-  constructor(@Inject(POLYMORPHEUS_CONTEXT) readonly context: {active: boolean}) {}
+  protected readonly context = injectContext<{active: boolean}>();
+}
+```
+
+Alternatively, inputs can be used and will be synced with according context keys:
+
+```ts
+import {input} from '@angular/core';
+
+@Component({
+  template: '{{ active() }}',
+})
+export class MyComponent {
+  // Will be automatically updated by context.active changes
+  protected readonly active = input(false);
 }
 ```
 

@@ -1,4 +1,4 @@
-import type {InjectOptions} from '@angular/core';
+import type {InjectOptions, Provider} from '@angular/core';
 import {inject, InjectionToken} from '@angular/core';
 
 /**
@@ -6,6 +6,13 @@ import {inject, InjectionToken} from '@angular/core';
  * instantiating them through {@link PolymorpheusOutlet}
  */
 export const POLYMORPHEUS_CONTEXT = new InjectionToken<Record<any, any>>('');
+
+export function provideContext<T = Record<any, any>>(useValue: T): Provider {
+    return {
+        provide: POLYMORPHEUS_CONTEXT,
+        useValue,
+    };
+}
 
 export function injectContext<T>(options?: InjectOptions & {optional?: false}): T;
 export function injectContext<T>(options?: InjectOptions & {optional: true}): T | null;
