@@ -1,5 +1,5 @@
 import {CommonModule, NgIf} from '@angular/common';
-import type {TemplateRef} from '@angular/core';
+import type {OnDestroy, TemplateRef} from '@angular/core';
 import {ChangeDetectionStrategy, Component, ElementRef, ViewChild} from '@angular/core';
 import type {ComponentFixture} from '@angular/core/testing';
 import {TestBed} from '@angular/core/testing';
@@ -13,6 +13,7 @@ import {
 } from '@taiga-ui/polymorpheus';
 
 let COUNTER = 0;
+const destroyedContexts: unknown[] = [];
 
 describe('PolymorpheusOutlet', () => {
     @Component({
@@ -103,6 +104,19 @@ describe('PolymorpheusOutlet', () => {
     })
     class WithInputs {
         public value = '';
+    }
+
+    @Component({
+        standalone: true,
+        template: '',
+        changeDetection: ChangeDetectionStrategy.OnPush,
+    })
+    class DestroyableContent implements OnDestroy {
+        public readonly context = injectContext<any>();
+
+        public ngOnDestroy(): void {
+            destroyedContexts.push(this.context.$implicit);
+        }
     }
 
     let fixture: ComponentFixture<TestComponent>;
@@ -323,6 +337,38 @@ describe('PolymorpheusOutlet', () => {
             fixture.detectChanges();
 
             expect(text()).toBe('New value');
+        });
+    });
+
+    describe('DestroyableContent', () => {
+        beforeEach(() => {
+            destroyedContexts.length = 0;
+        });
+
+        it.each([null, '', 0])(
+            'keeps context in ngOnDestroy when switching from component to %p',
+            (content) => {
+                testComponent.context = {$implicit: 'string'};
+                testComponent.content = new PolymorpheusComponent(DestroyableContent);
+                fixture.detectChanges();
+
+                testComponent.content = content;
+                fixture.detectChanges();
+
+                expect(destroyedContexts).toEqual(['string']);
+            },
+        );
+
+        it.each([
+            [0, 'Number: 0'],
+            ['', 'String:'],
+        ])('does not treat %p as missing content', (content, expected) => {
+            testComponent.polymorphic = true;
+            testComponent.context = {$implicit: 'fallback'};
+            testComponent.content = content;
+            fixture.detectChanges();
+
+            expect(text()).toBe(expected);
         });
     });
 });
