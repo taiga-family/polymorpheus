@@ -29,6 +29,7 @@ export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
     private readonly i = inject(INJECTOR);
     private readonly t = inject(TemplateRef);
     private c?: ComponentRef<unknown>;
+
     public content: PolymorpheusContent<C> = '';
     public context?: C;
 

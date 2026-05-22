@@ -13,6 +13,7 @@ import {type ContextWithActive} from '../interfaces';
 })
 export class MenuComponent<T> {
     protected readonly activeItem = signal<T | null>(null);
+
     public readonly items = input<readonly T[]>([]);
     public readonly emptyContent = input<PolymorpheusContent<never>>('Nothing is found');
 
