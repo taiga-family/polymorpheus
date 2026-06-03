@@ -21,10 +21,7 @@
             ],
             "executor": "nx:run-commands",
             "options": {
-                "commands": [
-                    "cp ./LICENSE ./README.md ./dist/{projectName}",
-                    "npm publish ./dist/{projectName} --ignore-scripts $([[ \"{args.tag}\" != \"\" ]] && echo \"--tag {args.tag}\")"
-                ],
+                "commands": ["cp ./LICENSE ./README.md ./dist/{projectName}", "npm publish ./dist/{projectName} --ignore-scripts $([ -n \"{args.tag}\" ] && echo \"--tag {args.tag}\")"],
                 "parallel": false
             }
         },
