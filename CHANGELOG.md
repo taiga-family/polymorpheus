@@ -1,3 +1,52 @@
+### 🚀 Features
+
+- allow using inputs in dynamic components
+  [(2710c3d)](https://github.com/taiga-family/polymorpheus/commit/2710c3d2c0f68e087af9a0f2b8b40da3da286cba)
+
+### 🐞 Bug Fixes
+
+- **outlet**: allow falsy context (#1155)
+  [(931d389)](https://github.com/taiga-family/polymorpheus/commit/931d389c61b5de5a001e6f4f9986d6fc0da655f3)
+- **outlet**: fix context in `ngOnDestroy` when switching from component to `null` (#1154)
+  [(7a64fa0)](https://github.com/taiga-family/polymorpheus/commit/7a64fa06023d865d34e6f4d1d84a427e7afb8bdc)
+
+### [5.0.1](https://github.com/taiga-family/polymorpheus/compare/v5.0.0...v5.0.1) (2026-05-15)
+
+### 🐞 Bug Fixes
+
+- **outlet**: allow falsy context (#1145)
+  [(fd4a110)](https://github.com/taiga-family/polymorpheus/commit/fd4a1100649c749336aee56cf75d017d348bcfed)
+- **outlet**: fix context in `ngOnDestroy` when switching from component to `null` (#1144)
+  [(f9daa7a)](https://github.com/taiga-family/polymorpheus/commit/f9daa7af5fd4372480b57c2881815de735af6289)
+
+## [5.0.0](https://github.com/taiga-family/polymorpheus/compare/v4.10.0...v5.0.0) (2025-12-19)
+
+### 🚀 Features
+
+- add `provideContext` (#1003)
+  [(071b823)](https://github.com/taiga-family/polymorpheus/commit/071b8233ec594bfd2ecd567d0aa76ee7b5367180)
+- **outlet**: allow using inputs in dynamic components (#996)
+  [(e7331c7)](https://github.com/taiga-family/polymorpheus/commit/e7331c71f24bd2e92d29070a47cec8e6ec9d62f7)
+
+### 🐞 Bug Fixes
+
+- **component**: fix `createInjector` without context (#1002)
+  [(3772f03)](https://github.com/taiga-family/polymorpheus/commit/3772f031077fea9240809ea830c0c7329e77e341)
+
+### [4.10.0](https://github.com/taiga-family/polymorpheus/compare/v4.9.0...v4.10.0) (2026-05-22)
+
+### 🚀 Features
+
+- allow using inputs in dynamic components
+  [(2710c3d)](https://github.com/taiga-family/polymorpheus/commit/2710c3d2c0f68e087af9a0f2b8b40da3da286cba)
+
+### 🐞 Bug Fixes
+
+- **outlet**: allow falsy context (#1155)
+  [(931d389)](https://github.com/taiga-family/polymorpheus/commit/931d389c61b5de5a001e6f4f9986d6fc0da655f3)
+- **outlet**: fix context in `ngOnDestroy` when switching from component to `null` (#1154)
+  [(7a64fa0)](https://github.com/taiga-family/polymorpheus/commit/7a64fa06023d865d34e6f4d1d84a427e7afb8bdc)
+
 ### [4.9.0](https://github.com/taiga-family/ng-polymorpheus/compare/v4.8.0...v4.9.0) (2025-03-16)
 
 ### 🐞 Bug Fixes
