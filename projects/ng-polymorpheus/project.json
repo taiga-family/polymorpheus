@@ -22,7 +22,10 @@
             "executor": "nx:run-commands",
             "options": {
                 "parallel": false,
-                "commands": ["cp ./LICENSE ./README.md ./dist/{projectName}", "npm publish ./dist/{projectName} --ignore-scripts --tag v4-lts"]
+                "commands": [
+                    "cp ./LICENSE ./README.md ./dist/{projectName}",
+                    "npm publish ./dist/{projectName} --ignore-scripts --tag v4-lts"
+                ]
             },
             "dependsOn": [
                 {
