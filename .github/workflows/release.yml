@@ -17,7 +17,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'chore(release)')"
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
-      - uses: taiga-family/ci/actions/run/release-it@a173bbdd44beec5cb34444b6fa497284da803031 # v1.217.0
+      - uses: taiga-family/ci/actions/run/release-it@cc838cc3dcb2e92a7090a3d9390f8992a6785fe3 # v1.218.0
         id: release-it
         with:
           ref: ${{ github.ref }}
@@ -25,14 +25,14 @@ jobs:
           npmToken: ${{ secrets.TAIGA_UI_SCOPE_NPM_TOKEN }}
           githubToken: ${{ secrets.TAIGA_FAMILY_BOT_PAT }}
 
-      - uses: taiga-family/ci/actions/run/read-package-json@a173bbdd44beec5cb34444b6fa497284da803031 # v1.217.0
+      - uses: taiga-family/ci/actions/run/read-package-json@cc838cc3dcb2e92a7090a3d9390f8992a6785fe3 # v1.218.0
         id: info
         with:
           path: ./projects/ng-polymorpheus/package.json
 
       - name: Announce to Telegram
         if: steps.release-it.outputs.released == 'true'
-        uses: taiga-family/ci/actions/messenger/telegram/announce@a173bbdd44beec5cb34444b6fa497284da803031 # v1.217.0
+        uses: taiga-family/ci/actions/messenger/telegram/announce@cc838cc3dcb2e92a7090a3d9390f8992a6785fe3 # v1.218.0
         with:
           chatId: ${{ secrets.TAIGA_TELEGRAM_CHAT_ID }}
           topicId: ${{ secrets.TAIGA_TELEGRAM_CHAT_THREAD_ID }}
