@@ -29,7 +29,7 @@ jobs:
       - run: npx nx build demo
       - run: npx nx build ng-polymorpheus
       - run: npx nx test ng-polymorpheus
-      - uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6
+      - uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7
       - uses: taiga-family/ci/actions/auto/push@6e89be341f2bb8247f26ac563e72344e6c9cf9ad # v1.220.0
         with:
           token: ${{ secrets.TAIGA_FAMILY_BOT_PAT }}
