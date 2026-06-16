@@ -1,34 +1,34 @@
 {
-    "workspaceLayout": {
-        "libsDir": "projects",
-        "appsDir": "projects"
-    },
-    "defaultProject": "demo",
     "$schema": "./node_modules/nx/schemas/nx-schema.json",
-    "tui": {
-        "enabled": false
-    },
+    "defaultBase": "origin/main",
+    "defaultProject": "demo",
     "namedInputs": {
         "default": ["{projectRoot}/**/*", "sharedGlobals"],
+        "production": ["default"],
         "sharedGlobals": [
             "{workspaceRoot}/nx.json",
             "{workspaceRoot}/tsconfig.*.json",
             "{workspaceRoot}/tsconfig.json"
-        ],
-        "production": ["default"]
+        ]
     },
     "targetDefaults": {
         "build": {
-            "inputs": ["default"],
-            "cache": true
-        },
-        "test": {
-            "inputs": ["default"],
-            "cache": true
+            "cache": true,
+            "inputs": ["default"]
         },
         "lint": {
             "cache": true
+        },
+        "test": {
+            "cache": true,
+            "inputs": ["default"]
         }
     },
-    "defaultBase": "origin/main"
+    "tui": {
+        "enabled": false
+    },
+    "workspaceLayout": {
+        "appsDir": "projects",
+        "libsDir": "projects"
+    }
 }
