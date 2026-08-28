@@ -25,7 +25,7 @@
     "license": "Apache-2.0",
     "contributors": [
         "Alex Inkin <alexander@inkin.ru>",
-        "Roman Sedov <marsfarsh@gmail.com>",
+        "Roman Sedov <marsfarsh@gmail.com>"
     ],
     "peerDependencies": {
         "@angular/core": ">=19.0.0",
