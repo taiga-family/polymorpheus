@@ -24,14 +24,8 @@
     },
     "license": "Apache-2.0",
     "contributors": [
-        {
-            "email": "alexander@inkin.ru",
-            "name": "Alex Inkin"
-        },
-        {
-            "email": "r.sedov@tinkoff.ru",
-            "name": "Roman Sedov"
-        }
+        "Alex Inkin <alexander@inkin.ru>",
+        "Roman Sedov <marsfarsh@gmail.com>",
     ],
     "peerDependencies": {
         "@angular/core": ">=19.0.0",
