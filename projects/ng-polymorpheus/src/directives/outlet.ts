@@ -23,14 +23,14 @@ import {PolymorpheusTemplate} from './template';
     selector: '[polymorpheusOutlet]',
     inputs: ['content: polymorpheusOutlet', 'context: polymorpheusOutletContext'],
 })
-export class PolymorpheusOutlet<C> implements OnChanges, DoCheck {
+export class PolymorpheusOutlet<C, T = unknown> implements OnChanges, DoCheck {
     private readonly vcr = inject(ViewContainerRef);
     private readonly i = inject(INJECTOR);
     private readonly t = inject(TemplateRef);
     private c?: ComponentRef<unknown>;
 
-    public content: PolymorpheusContent<C> = '';
-    public context?: C;
+    public content: PolymorpheusContent<C, T> = '';
+    public context?: C & (T extends {readonly context: infer U} ? NoInfer<U> : unknown);
 
     public static ngTemplateContextGuard<T>(
         _dir: PolymorpheusOutlet<T>,

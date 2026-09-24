@@ -8,8 +8,8 @@ import {type PolymorpheusPrimitive} from './primitive';
 /**
  * All content types supported by {@link PolymorpheusOutlet}
  */
-export type PolymorpheusContent<C = any> =
-    | PolymorpheusComponent<unknown>
+export type PolymorpheusContent<C = any, T = unknown> =
+    | PolymorpheusComponent<T>
     | PolymorpheusHandler<C>
     | PolymorpheusPrimitive
     | PolymorpheusTemplate<Partial<C> | ''> // string is untyped, e.g. 'any'

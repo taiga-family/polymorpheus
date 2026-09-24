@@ -89,6 +89,28 @@ readonly context!: { $implicit: number };
 </ng-template>
 ```
 
+### Checking component context
+
+With `strictTemplates`, `PolymorpheusOutlet` checks the supplied context against a component's public `context` field:
+
+```ts
+export class EditorComponent {
+  public readonly context = injectContext<{value: string}>();
+}
+
+// In the host component:
+protected readonly editor = new PolymorpheusComponent(EditorComponent);
+```
+
+```html
+<ng-container *polymorpheusOutlet="editor; context: {value: 'Hello'}" />
+```
+
+Passing `{value: 42}` is a compilation error. Components without a public `context` field (including protected fields)
+retain the previous behavior. Primitives, functions and templates keep their existing typing. The context binding
+remains optional. Widening component content to `PolymorpheusContent` loses the component type, and `any` bypasses
+checks.
+
 ## Core team
 
 <table>
