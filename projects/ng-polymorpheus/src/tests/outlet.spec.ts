@@ -97,7 +97,7 @@ describe('PolymorpheusOutlet', () => {
         changeDetection: ChangeDetectionStrategy.Default,
     })
     class ComponentContent {
-        public readonly context = injectContext({optional: true});
+        public readonly context = injectContext<{$implicit: unknown}>({optional: true});
 
         constructor() {
             COUNTER++;
