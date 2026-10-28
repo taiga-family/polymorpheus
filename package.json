@@ -112,6 +112,7 @@
         "express": "4.22.3",
         "highlight.js": "11.12.0",
         "husky": "9.1.7",
+        "jest-preset-angular": "14.6.2",
         "less": "4.9.1",
         "ng-packagr": "19.2.2",
         "ngx-highlightjs": "14.0.1",
