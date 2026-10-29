@@ -105,7 +105,7 @@
         "@schematics/angular": "19.2.27",
         "@swc/helpers": "0.5.23",
         "@taiga-ui/configs": "0.563.0",
-        "@taiga-ui/dompurify": "5.0.1",
+        "@taiga-ui/dompurify": "5.0.2",
         "@types/estree": "1.0.9",
         "@types/express": "5.0.6",
         "@types/node": "24.13.4",
