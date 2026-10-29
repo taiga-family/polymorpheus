@@ -16,9 +16,9 @@
         "ngTemplateOutlet",
         "ngComponentOutlet"
     ],
-    "homepage": "https://github.com/taiga-family/ng-polymorpheus#README",
-    "bugs": "https://github.com/taiga-family/ng-polymorpheus/issues",
-    "repository": "https://github.com/taiga-family/ng-polymorpheus",
+    "homepage": "https://github.com/taiga-family/polymorpheus#README",
+    "bugs": "https://github.com/taiga-family/polymorpheus/issues",
+    "repository": "https://github.com/taiga-family/polymorpheus",
     "license": "Apache-2.0",
     "peerDependencies": {
         "@angular/core": ">=16.0.0",
