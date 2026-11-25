@@ -103,7 +103,7 @@
         "@nx/jest": "21.6.11",
         "@nx/workspace": "21.6.11",
         "@schematics/angular": "19.2.27",
-        "@swc/helpers": "0.5.23",
+        "@swc/helpers": "0.5.24",
         "@taiga-ui/configs": "0.572.0",
         "@taiga-ui/dompurify": "5.0.2",
         "@types/estree": "1.0.10",
